@@ -276,7 +276,7 @@ class Convertor {
         var courses = [Course]()
         for (index,subJson):(String, JSON) in json {
             let date = subJson["acad_year"].string!
-            let year = Int(String(date.characters.prefix(4)))!
+            let year = Int(date.prefix(4))!
             let term = Int(subJson["term"].string!)!
             let subject = subJson["subject_area"].string!
             let catalog = subJson["catalog_number"].string!
@@ -297,10 +297,17 @@ class Convertor {
     
     static func jsonToAssignmentList(json: JSON) -> [Assignment] {
         var assignments = [Assignment]()
+        print(json)
         for (index,subJson):(String, JSON) in json {
-            let submittedNum = subJson["numOfSubmissions"].int!
+            var submittedNum = subJson["numOfSubmissions"].int
+            if submittedNum == nil {
+                submittedNum = 10
+            }
             let asgnNum = subJson["assignmentNumber"].int!
-            let submitTime = subJson["lastSubmissionTimeStr"].string!
+            var submitTime = subJson["lastSubmissionTimeStr"].string
+            if submitTime == nil {
+                submitTime = "2018-1-1"
+            }
             let enrollNum = subJson["numOfEnrolledStudents"].int!
             
             let image =  UIImage(named: "folder")!
@@ -308,7 +315,7 @@ class Convertor {
             //      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),startYear=\(startYear),endYear=\(endYear),code=\(code),enrolNum=\(enrollmentNumber),instructor=\(instructor)")
             // let name = "Assignment"
             // print (name)
-            var new_asg = Assignment(asgnNum: asgnNum, submitNum: submittedNum, enrollNum: enrollNum, lastSubmitTime: submitTime, image: image)!
+            var new_asg = Assignment(asgnNum: asgnNum, submitNum: submittedNum!, enrollNum: enrollNum, lastSubmitTime: submitTime!, image: image)!
             assignments += [new_asg]
             print ("asgnNum=\(new_asg.asgnNum),submitNum=\(new_asg.submitNum),enrollNum=\(new_asg.enrollNum),lastSubmitTime=\(new_asg.lastSubmitTime)")
         }
@@ -317,6 +324,7 @@ class Convertor {
   
     static func jsonToAssignmentRecordList(json: JSON) -> [AssignmentRecord] {
         var assignmentRecords = [AssignmentRecord]()
+        print(json)
         for (index,subJson):(String, JSON) in json {
             let refId = subJson["refId"].int!
             let submitTime = subJson["submissionTimeStr"].string!
@@ -325,7 +333,7 @@ class Convertor {
             let assignmentRecordImage = UIImage(named: "calendar")!
             var new_asg_rec = AssignmentRecord(refId: refId, submitTime: submitTime, studentId: studentId, studentName: studentName, assignmentRecordImage: assignmentRecordImage)!
             assignmentRecords += [new_asg_rec]
-            //print ("id=\(new_asg.id),name=Assignment \(new_asg.id),imageStr=\(imageStr),submission=\(new_asg.submittedNum),dueDate=\(dueDate)")
+//            print ("id=\(new_asg_rec.refId),name=Assignment \(new_asg_rec.id),submission=\(new_asg_rec.submittedNum),dueDate=\(dueDate)")
             print(new_asg_rec.refId)
         }
         return assignmentRecords

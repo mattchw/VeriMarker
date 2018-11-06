@@ -203,7 +203,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="20" maxX="0.0" maxY="20"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="CourseCollectionViewCell" id="ccv-lK-D98" customClass="CourseCollectionViewCell" customModule="fyp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CourseCollectionViewCell" id="ccv-lK-D98" customClass="CourseCollectionViewCell" customModule="fyp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="70" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -543,7 +543,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="AssignmentCollectionViewCell" id="Emp-mh-yl8" customClass="AssignmentCollectionViewCell" customModule="fyp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AssignmentCollectionViewCell" id="Emp-mh-yl8" customClass="AssignmentCollectionViewCell" customModule="fyp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -854,9 +854,10 @@
         <image name="verimarking" width="76" height="76"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Hmn-g5-svN"/>
         <segue reference="lh8-5f-VGm"/>
         <segue reference="O0F-Pa-Zfx"/>
         <segue reference="O9V-FU-0Mq"/>
-        <segue reference="dsh-Us-DUH"/>
+        <segue reference="E0k-ge-Ti5"/>
     </inferredMetricsTieBreakers>
 </document>

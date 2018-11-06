@@ -164,7 +164,7 @@ class AppAPI {
             let instructor_id = HomePageViewController.user!.computingId
             // let urlString = "https://api.veriguide.org:8083/vg-api/v1/"
             let urlString = "https://api.veriguide.org:8084/vg-api/v1/"
-            urlWithParam = urlString + "course/" + courseCode + "/assignments?client_id=" + OAuth2Helper.oauth2.clientId! + "&computing_id=" + instructor_id
+            urlWithParam = urlString + "course/" + courseCode + "/assignments?client_id=" + OAuth2Helper.oauth2.clientId!
             break
             
         case ConnectorType.Localhost:
@@ -191,7 +191,7 @@ class AppAPI {
             //if(!result){
             //   print ("Fail to write back the file")
             //}
-            // convert the JSON into an array of Course Object
+            // convert the JSON into an array of Assignment Object
             let assignments = Convertor.jsonToAssignmentList(json: json)
             //print(assignments[0].id)
             completion(assignments, nil)
@@ -212,7 +212,7 @@ class AppAPI {
         switch self.connectorType {
         case ConnectorType.Veriguide:
             let instructor_id = HomePageViewController.user!.computingId
-            let urlString = "https://api.veriguide.org:8083/vg-api/v1/"
+            let urlString = "https://api.veriguide.org:8084/vg-api/v1/"
             urlWithParam = urlString + "assignment/" + courseCode + "/" + String(describing:asgnNum)
             urlWithParam += "/submissions?client_id=" + OAuth2Helper.oauth2.clientId! + "&computing_id=" + instructor_id
             break
@@ -292,7 +292,7 @@ class AppAPI {
     func downloadAssignment(courseCode: String, refId: Int, completion: @escaping (String, ConnectionError?)->()) {
         var urlWithParam: String
         let instructor_id = HomePageViewController.user!.computingId
-        let urlString = "https://api.veriguide.org:8083/vg-api/v1/"
+        let urlString = "https://api.veriguide.org:8084/vg-api/v1/"
         urlWithParam = urlString + "assignment/" + courseCode + "/" + String(describing:refId)
         urlWithParam += "/file?client_id=" + OAuth2Helper.oauth2.clientId! + "&computing_id=" + instructor_id
         print ("urlWithParam = \(urlWithParam)")

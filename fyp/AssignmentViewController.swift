@@ -80,6 +80,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             print ("Fail to load api")
             
         }
+        print(course!.code)
         api!.getAssignmentList(courseCode: course!.code){
             (assignmentL, error) in
             if (error != nil){
@@ -186,7 +187,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   
   func numberOfSections(in tableView: UITableView) -> Int {
     // #warning Incomplete implementation, return the number of sections
-    return 1
+//    print(assignments.count)
+//    print(assignments)
+    return assignments.count
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
