@@ -49,6 +49,7 @@
 		CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */; };
 		CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22551DAE2D490025D33E /* roundUIButton.swift */; };
 		CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */; };
+		DCC30A4D21983B2C0076E1A1 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC30A4C21983B2B0076E1A1 /* Device.swift */; };
 		DCC7F90D215A36C600FFB159 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DEF71DA3C697009B69FC /* AppDelegate.swift */; };
 		E010272E1DE79B1400E2F2A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E010272D1DE79B1400E2F2A9 /* Constants.swift */; };
 		E01027301DE7AE0E00E2F2A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E010272F1DE7AE0E00E2F2A9 /* Assets.xcassets */; };
@@ -174,6 +175,7 @@
 		CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navigationDelegate.swift; sourceTree = "<group>"; };
 		CDBC22551DAE2D490025D33E /* roundUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundUIButton.swift; sourceTree = "<group>"; };
 		CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bottomBorderUITextField.swift; sourceTree = "<group>"; };
+		DCC30A4C21983B2B0076E1A1 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		E010272D1DE79B1400E2F2A9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E010272F1DE7AE0E00E2F2A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = fyp/Assets.xcassets; sourceTree = "<group>"; };
 		E014CBC71DDBF6E500A97E80 /* AppAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				E010272D1DE79B1400E2F2A9 /* Constants.swift */,
+				DCC30A4C21983B2B0076E1A1 /* Device.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -529,7 +532,7 @@
 				TargetAttributes = {
 					CD37DEF31DA3C697009B69FC = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 387JNHUBJQ;
+						DevelopmentTeam = 9VUX37J29A;
 						ProvisioningStyle = Automatic;
 					};
 					CD37DF071DA3C698009B69FC = {
@@ -664,6 +667,7 @@
 				CD69E03F1DE606770029B168 /* CourseTableViewHeaderView.swift in Sources */,
 				E02856B21DE6E2AF00D85AA8 /* Utilities.swift in Sources */,
 				CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */,
+				DCC30A4D21983B2C0076E1A1 /* Device.swift in Sources */,
 				CD69E02C1DE4791B0029B168 /* CourseCollectionReusableView.swift in Sources */,
 				E014CBC81DDBF6E500A97E80 /* AppAPI.swift in Sources */,
 				E014CBCF1DDBFF5A00A97E80 /* SwiftyJSON.swift in Sources */,
@@ -820,11 +824,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 387JNHUBJQ;
+				DEVELOPMENT_TEAM = 9VUX37J29A;
 				INFOPLIST_FILE = fyp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cse.hwtsang5.testFYP;
+				PRODUCT_BUNDLE_IDENTIFIER = cse.ik1801.FYP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos10.1;
 				SWIFT_VERSION = 3.0;
@@ -839,11 +843,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 387JNHUBJQ;
+				DEVELOPMENT_TEAM = 9VUX37J29A;
 				INFOPLIST_FILE = fyp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cse.hwtsang5.testFYP;
+				PRODUCT_BUNDLE_IDENTIFIER = cse.ik1801.FYP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos10.1;
 				SWIFT_VERSION = 3.0;
