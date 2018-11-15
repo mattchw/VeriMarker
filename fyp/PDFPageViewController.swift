@@ -896,11 +896,30 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   func loadEraserOptionPanel(){
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = 10
-    let btnOffsetY:CGFloat = panelHeight / 10 + btnHeight / 1.8
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 30
+        btnHeight = 30
+        btnSpacing = 10
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
+    
     eraserOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     eraserOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
@@ -927,7 +946,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     eraserLongPress.delaysTouchesBegan = false
     eraserBtn.addGestureRecognizer(eraserLongPress)
     
-    let cancelBtn = UIButton(frame: CGRect(x: 10, y: 20, width: btnWidth, height: btnHeight))
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
     
     let cancelImage = UIImage(named: "cross")
     cancelBtn.setImage(cancelImage, for: .normal)
@@ -936,7 +955,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Create size button
     var counter:CGFloat = 0
     for i in 7...10 {
-      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: 20, width: btnWidth, height: btnHeight))
+      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: btnOffsetY, width: btnWidth, height: btnHeight))
       btn.backgroundColor = UIColor.cyan
       btn.layer.cornerRadius = btnWidth / 2
       let size:CGSize = CGSize(width: btnWidth * CGFloat(i) / 15, height: btnWidth * CGFloat(i) / 15)
@@ -962,14 +981,31 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   }
   
   func loadPenOptionPanel(){
-
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = 10
-    let btnOffsetY:CGFloat = 20
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 25
+        btnHeight = 25
+        btnSpacing = 5
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
     penOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     penOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
@@ -1037,7 +1073,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     penLongPress.delaysTouchesBegan = false
     penBtn.addGestureRecognizer(penLongPress)
     
-    let cancelBtn = UIButton(frame: CGRect(x: 10, y: 20, width: btnWidth, height: btnHeight))
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
     
     let cancelImage = UIImage(named: "cross")
     cancelBtn.setImage(cancelImage, for: .normal)
@@ -1052,7 +1088,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Create size button
     var counter:CGFloat = 0
     for i in 7...10 {
-      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: 20, width: btnWidth, height: btnHeight))
+      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: btnOffsetY, width: btnWidth, height: btnHeight))
       btn.backgroundColor = UIColor.cyan
       btn.layer.cornerRadius = btnWidth / 2
       let size:CGSize = CGSize(width: btnWidth * CGFloat(i) / 15, height: btnWidth * CGFloat(i) / 15)
@@ -1089,11 +1125,29 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   func loadPencilOptionPanel(){
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = 10
-    let btnOffsetY:CGFloat = 20
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 30
+        btnHeight = 30
+        btnSpacing = 10
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
     pencilOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     pencilOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
@@ -1122,7 +1176,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     pencilLongPress.delaysTouchesBegan = false
     pencilBtn.addGestureRecognizer(pencilLongPress)
     
-    let cancelBtn = UIButton(frame: CGRect(x: 10, y: 20, width: btnWidth, height: btnHeight))
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
     
     let cancelImage = UIImage(named: "cross")
     cancelBtn.setImage(cancelImage, for: .normal)
@@ -1159,18 +1213,36 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   func loadHighlightOptionPanel(){
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = 10
-    let btnOffsetY:CGFloat = 20
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 25
+        btnHeight = 25
+        btnSpacing = 5
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
     highlightOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     highlightOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
     
     let border = CALayer()
     border.borderColor = navBarColor.cgColor
-    border.frame = CGRect(x: 0, y: 0, width:  panelWidth, height: 1.0)
+    border.frame = CGRect(x: 0, y: 0, width: panelWidth, height: 1.0)
     border.borderWidth = 2.0
     
     highlightOptionPanelView?.layer.addSublayer(border)
@@ -1228,7 +1300,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     let highlightLongPress = UILongPressGestureRecognizer(target: self, action: #selector(hideHighlightOption))
     highlightLongPress.delaysTouchesBegan = false
     highlightBtn.addGestureRecognizer(highlightLongPress)
-    let cancelBtn = UIButton(frame: CGRect(x: 10, y: 20, width: btnWidth, height: btnHeight))
+    
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
     
     let cancelImage = UIImage(named: "cross")
     cancelBtn.setImage(cancelImage, for: .normal)
