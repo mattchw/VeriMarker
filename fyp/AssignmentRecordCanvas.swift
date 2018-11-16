@@ -33,6 +33,7 @@ class AssignmentRecordCanvas: UIImageView {
   var coalesedTouches = [UITouch]()
   var previous = CGPoint()
   var current = CGPoint()
+    
   /* Draw Method */
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     touch = touches.first!
@@ -111,7 +112,6 @@ class AssignmentRecordCanvas: UIImageView {
     case "pen":
       size = parentController!.penSize
       color = parentController!.penColor
-      
       break
     case "pencil":
       size = parentController!.pencilSize

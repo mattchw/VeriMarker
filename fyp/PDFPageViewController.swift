@@ -141,8 +141,11 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     
     //Init layout value
     let percentage:CGFloat = 0.92;
+    //width and height of the drawing view
     width = view.frame.size.width;
     height = view.frame.size.height * percentage;
+    
+    //width and height of the pen tools panel
     panelWidth = view.frame.size.width;
     panelHeight = view.frame.size.height * (1 - percentage);
     
@@ -159,7 +162,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     
     //load navigation item and bar button here
     loadNavigationItem()
-    
+
+    //invisible unless long press on eraser, pen, pencil, highlight
     //load pen option panel here (Not Visible)
     loadPenOptionPanel()
     
@@ -172,11 +176,11 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //load pencil option panel here (Not Visible)
     loadPencilOptionPanel()
     
-    //load control panel here
+    //load control panel here, pen tools panel
     loadControlPanel()
     
     //load control panel for comment!
-    //loadCommentControlPanel()
+    loadCommentControlPanel()
     
     //load the page overview btn here
     loadPageOverviewBtn()
@@ -580,35 +584,47 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Done Button
     let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneBtnTapped))
     doneItem.tintColor = UIColor.white
+    
     //Common Comments Button
     let commentBtn = UIButton(type: .custom)
     let commentImg = UIImage(named: "chat")?.withRenderingMode(.alwaysTemplate)
     commentBtn.setImage(commentImg, for: .normal)
     commentBtn.tintColor = UIColor.white
-    commentBtn.frame = CGRect(x: 0, y: 0, width: btnWidth, height: btnHeight)
+    //commentBtn.frame = CGRect(x: 0, y: 0, width: btnWidth, height: btnHeight)
     commentBtn.addTarget(self, action: #selector(commentBtnTapped), for: .touchUpInside)
     let commentItem = UIBarButtonItem(customView: commentBtn)
+    
     //Redo Button
     let redoBtn = UIButton(type: .custom)
     let redoImg = UIImage(named: "redo")?.withRenderingMode(.alwaysTemplate)
     redoBtn.setImage(redoImg, for: .normal)
     redoBtn.tintColor = UIColor.white
-    redoBtn.frame = CGRect(x: 0, y: 0, width: btnWidth, height: btnHeight)
+    //redoBtn.frame = CGRect(x: 0, y: 0, width: btnWidth, height: btnHeight)
     redoBtn.addTarget(self, action: #selector(redoBtnTapped), for: .touchUpInside)
     let redoItem = UIBarButtonItem(customView: redoBtn)
+    
     //Undo Button
     let undoBtn = UIButton(type: .custom)
     undoBtn.setImage(redoImg, for: .normal)
     undoBtn.tintColor = UIColor.white
     undoBtn.imageView?.transform = CGAffineTransform(scaleX: -1, y: 1)
     //undoBtn.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI) / 180)
-    undoBtn.frame = CGRect(x: 0, y: 0, width: btnWidth, height: btnHeight)
+    // undoBtn.frame = CGRect(x: 0, y: 0, width: btnWidth, height: btnHeight)
     undoBtn.addTarget(self, action: #selector(undoBtnTapped), for: .touchUpInside)
     let undoItem = UIBarButtonItem(customView: undoBtn)
     
     navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: height * 0.05))
     navBar?.barTintColor = navBarColor
     self.view.addSubview(navBar!)
+    
+    //contraints
+    commentItem.customView?.widthAnchor.constraint(equalToConstant: btnWidth).isActive = true
+    commentItem.customView?.heightAnchor.constraint(equalToConstant: btnHeight).isActive = true
+    redoItem.customView?.widthAnchor.constraint(equalToConstant: btnWidth).isActive = true
+    redoItem.customView?.heightAnchor.constraint(equalToConstant: btnHeight).isActive = true
+    undoItem.customView?.widthAnchor.constraint(equalToConstant: btnWidth).isActive = true
+    undoItem.customView?.heightAnchor.constraint(equalToConstant: btnHeight).isActive = true
+    
     let navItem = UINavigationItem()
     navItem.setRightBarButtonItems([doneItem,redoItem,undoItem], animated: true)
     navItem.setLeftBarButtonItems([commentItem], animated: true)
@@ -658,25 +674,56 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //panelView.layer.cornerRadius = 30
     let border = CALayer()
     border.borderColor = navBarColor.cgColor
-    border.frame = CGRect(x: 0, y: 0, width:  panelWidth, height: 1.0)
+    border.frame = CGRect(x: 0, y: 0, width: panelWidth, height: 1.0)
     border.borderWidth = 2.0
     
     panelView?.layer.addSublayer(border)
     //panelView.layer.masksToBounds = true
     
     //Create button
-    let btnWidth:CGFloat = 60
-    let btnHeight:CGFloat = 80
-    let btnSpacing:CGFloat = width / 10
-    let btnOffsetY:CGFloat = 10
-    let btnOffsetX:CGFloat = panelWidth / 4
-    let labelWidth:CGFloat = 60
-    let labelHeight:CGFloat = 10
+    /* default buttons */
+    var btnWidth:CGFloat = 60
+    var btnHeight:CGFloat = 60
+    var btnSpacing:CGFloat = 20
+    var btnOffsetY:CGFloat = 10
+    var btnOffsetX:CGFloat = panelWidth / 4
+    var labelWidth:CGFloat = btnWidth
+    var labelHeight:CGFloat = 10
     
-    //Eraser
-    eraserBtn = UIButton(frame: CGRect(x: btnOffsetX, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    switch Device.DEVICE {
+    case .phone:
+    // It's an iPhone
+        btnWidth = 30
+        btnHeight = 30
+        btnSpacing = 10
+        btnOffsetY = 5
+        btnOffsetX = panelWidth / 4
+        labelWidth = btnWidth
+        labelHeight = 10
+        break
+    default:
+        btnWidth = 60
+        btnHeight = 60
+        btnSpacing = 20
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        labelWidth = btnWidth
+        labelHeight = 10
+        break
+    }
     
-    let eraserImage = UIImage(named: "eraser")
+    // left2 left1 center right1 right2
+    let centerBtn:CGFloat = (panelWidth/2)-(btnWidth/2)
+    let left1Btn:CGFloat = centerBtn - 1 * (btnSpacing + btnWidth)
+    let left2Btn:CGFloat = centerBtn - 2 * (btnSpacing + btnWidth)
+    let right1Btn:CGFloat = centerBtn + 1 * (btnSpacing + btnWidth)
+    let right2Btn:CGFloat = centerBtn + 2 * (btnSpacing + btnWidth)
+    
+    //Eraser (left2)
+    //eraserBtn = UIButton(frame: CGRect(x: btnOffsetX, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    eraserBtn = UIButton(frame: CGRect(x: left2Btn, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    
+    let eraserImage = UIImage(named: "eraser2")
     eraserBtn?.setImage(eraserImage, for: .normal)
     eraserBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI))
     
@@ -687,60 +734,55 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     eraserBtn?.addGestureRecognizer(eraserLongPress)
     //End Easer
     
-    //Pen
-    penBtn = UIButton(frame: CGRect(x: btnOffsetX + 1 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    //Pencil (left1)
+    //pencilBtn = UIButton(frame: CGRect(x: btnOffsetX + 2 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    pencilBtn = UIButton(frame: CGRect(x: left1Btn, y: btnOffsetY, width: btnWidth, height: btnHeight))
     
-    let penImage = UIImage(named: "pen")
-    penBtn?.setImage(penImage, for: .normal)
-    penBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI))
-    
-    
-    penBtn?.setTitle("Pen", for: .normal)
-    penBtn?.addTarget(self, action: #selector(penBtnTapped), for: .touchUpInside)
-    penBtn?.titleLabel?.backgroundColor = UIColor.darkGray
-    penBtn?.layer.borderColor = UIColor.darkGray.cgColor
-    
-    
-    let penLongPress = UILongPressGestureRecognizer(target: self, action: #selector(showPenOption))
-    penLongPress.delaysTouchesBegan = false
-    penBtn?.addGestureRecognizer(penLongPress)
-    
-    //Create Label
-    currentPenColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 1 * btnSpacing, y: btnOffsetY + btnHeight + labelHeight / 2, width:labelWidth, height: labelHeight))
-    //currentPenColorLabel?.layer.cornerRadius = 10
-    currentPenColorLabel?.clipsToBounds = true
-    let penColor = getMyPenColor()
-    currentPenColorLabel?.backgroundColor = penColor
-    //End Pen
-    
-    //Pencil
-    pencilBtn = UIButton(frame: CGRect(x: btnOffsetX + 2 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
-    
-    let pencilImage = UIImage(named: "pencil")
+    let pencilImage = UIImage(named: "pencil2")
     pencilBtn?.setImage(pencilImage, for: .normal)
     pencilBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI))
-    
     
     pencilBtn?.setTitle("Pencil", for: .normal)
     pencilBtn?.addTarget(self, action: #selector(pencilBtnTapped), for: .touchUpInside)
     pencilBtn?.titleLabel?.backgroundColor = UIColor.darkGray
     pencilBtn?.layer.borderColor = UIColor.darkGray.cgColor
     
-    
     let pencilLongPress = UILongPressGestureRecognizer(target: self, action: #selector(showPencilOption))
     pencilLongPress.delaysTouchesBegan = false
     pencilBtn?.addGestureRecognizer(pencilLongPress)
-    
-    //Create Label
-    currentPencilColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 2 * btnSpacing, y: btnOffsetY + btnHeight + labelHeight / 2, width:labelWidth, height: labelHeight))
-    let pencilColor = getMyPenColor()
-    currentPenColorLabel?.backgroundColor = pencilColor
     //End Penil
     
-    //Highlight Pen
-    highlightBtn = UIButton(frame: CGRect(x: btnOffsetX + 3 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    //Pen (center)
+    //penBtn = UIButton(frame: CGRect(x: btnOffsetX + 1 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    penBtn = UIButton(frame: CGRect(x: centerBtn, y: btnOffsetY, width: btnWidth, height: btnHeight))
     
-    let highlightImage = UIImage(named: "highlight")
+    let penImage = UIImage(named: "pen2")
+    penBtn?.setImage(penImage, for: .normal)
+    penBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI))
+    
+    penBtn?.setTitle("Pen", for: .normal)
+    penBtn?.addTarget(self, action: #selector(penBtnTapped), for: .touchUpInside)
+    penBtn?.titleLabel?.backgroundColor = UIColor.darkGray
+    penBtn?.backgroundColor = UIColor.lightGray
+    penBtn?.layer.borderColor = UIColor.darkGray.cgColor
+    
+    let penLongPress = UILongPressGestureRecognizer(target: self, action: #selector(showPenOption))
+    penLongPress.delaysTouchesBegan = false
+    penBtn?.addGestureRecognizer(penLongPress)
+    
+    //Create Label
+    currentPenColorLabel = UILabel(frame: CGRect(x: centerBtn, y: btnOffsetY + btnHeight + labelHeight / 2, width:labelWidth, height: labelHeight))
+    //currentPenColorLabel?.layer.cornerRadius = 10
+    currentPenColorLabel?.clipsToBounds = true
+    let penColor = getMyPenColor()
+    currentPenColorLabel?.backgroundColor = penColor
+    //End Pen
+    
+    //Highlight Pen (right1)
+    //highlightBtn = UIButton(frame: CGRect(x: btnOffsetX + 3 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    highlightBtn = UIButton(frame: CGRect(x: right1Btn, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    
+    let highlightImage = UIImage(named: "highlight2")
     highlightBtn?.setImage(highlightImage, for: .normal)
     highlightBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI))
     
@@ -751,15 +793,16 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     highlightBtn?.addGestureRecognizer(highlightLongPress)
     
     //Create Label
-    currentHighlightColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 3 * btnSpacing, y: btnOffsetY + btnHeight + labelHeight / 2, width:labelWidth, height: labelHeight))
+    currentHighlightColorLabel = UILabel(frame: CGRect(x: right1Btn, y: btnOffsetY + btnHeight + labelHeight / 2, width:labelWidth, height: labelHeight))
     let highlightColor = UIColor.yellow
     currentHighlightColorLabel?.backgroundColor = highlightColor
     //End Highlight Pen
     
-    //Text Box
-    textBoxBtn = UIButton(frame: CGRect(x: btnOffsetX + 4 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    //Text Box (right2)
+    //textBoxBtn = UIButton(frame: CGRect(x: btnOffsetX + 4 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    textBoxBtn = UIButton(frame: CGRect(x: right2Btn, y: btnOffsetY, width: btnWidth, height: btnHeight))
     
-    let textBoxImage = UIImage(named: "character")
+    let textBoxImage = UIImage(named: "textBox")
     textBoxBtn?.setImage(textBoxImage, for: .normal)
     
     textBoxBtn?.setTitle("TestBox", for: .normal)
@@ -773,17 +816,15 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     pencilBtn?.transform = CGAffineTransform.init(scaleX: 0.001, y: 0.001)
     textBoxBtn?.transform = CGAffineTransform.init(scaleX: 0.001, y: 0.001)
     
-    
-    
     panelView?.addSubview(eraserBtn!)
-    panelView?.addSubview(penBtn!)
     panelView?.addSubview(pencilBtn!)
+    panelView?.addSubview(penBtn!)
     panelView?.addSubview(highlightBtn!)
     panelView?.addSubview(textBoxBtn!)
     
     panelView?.addSubview(currentPenColorLabel!)
     panelView?.addSubview(currentHighlightColorLabel!)
-    panelView?.addSubview(currentPencilColorLabel!)
+    // panelView?.addSubview(currentPencilColorLabel!)
     
     view.addSubview(panelView!)
     
@@ -831,7 +872,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       btn.layer.borderColor = UIColor.cyan.cgColor
       btn.layer.borderWidth = 2
       btn.layer.cornerRadius = 10
-      btn.backgroundColor = UIColor.cyan
+      btn.backgroundColor = UIColor.darkGray
       btn.setTitleColor(UIColor.black, for: .normal)
       btn.setTitleColor(UIColor.white, for: .focused)
       btn.setTitle(comments[i], for: .normal)
@@ -844,9 +885,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     }
     
     //Set the default comment
-    PDFViewControllers[pageCurrent].commentView?.setComment(comments[0])
+    // PDFViewControllers[pageCurrent].commentView?.setComment(comments[0])
     //Set visual feedback
-    commentBtns[0].backgroundColor = UIColor.init(red: 0, green: 99/255, blue: 99/255, alpha: 1)
+    //commentBtns[0].backgroundColor = UIColor.init(red: 0, green: 99/255, blue: 99/255, alpha: 1)
+    commentBtns[0].backgroundColor = UIColor.darkGray
     commentBtns[0].setTitleColor(UIColor.white, for: .normal)
     
   }
@@ -854,11 +896,30 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   func loadEraserOptionPanel(){
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = width / 15
-    let btnOffsetY:CGFloat = panelHeight / 10 + btnHeight / 1.8
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 30
+        btnHeight = 30
+        btnSpacing = 10
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
+    
     eraserOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     eraserOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
@@ -876,20 +937,25 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     eraserBtn.setImage(eraserImage, for: .normal)
     eraserBtn.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI))
     
-    
     eraserBtn.setTitle("Eraser", for: .normal)
     eraserBtn.addTarget(self, action: #selector(eraserBtnTapped), for: .touchUpInside)
     eraserBtn.titleLabel?.backgroundColor = UIColor.darkGray
     eraserBtn.layer.borderColor = UIColor.darkGray.cgColor
     
-    
     let eraserLongPress = UILongPressGestureRecognizer(target: self, action: #selector(hideEraserOption))
     eraserLongPress.delaysTouchesBegan = false
     eraserBtn.addGestureRecognizer(eraserLongPress)
     
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    
+    let cancelImage = UIImage(named: "cross")
+    cancelBtn.setImage(cancelImage, for: .normal)
+    cancelBtn.addTarget(self, action: #selector(hideEraserOption2(_:)), for: .touchUpInside)
+    
     //Create size button
+    var counter:CGFloat = 0
     for i in 7...10 {
-      let btn = UIButton(frame: CGRect(x: btnOffsetX + CGFloat(i) * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: btnOffsetY, width: btnWidth, height: btnHeight))
       btn.backgroundColor = UIColor.cyan
       btn.layer.cornerRadius = btnWidth / 2
       let size:CGSize = CGSize(width: btnWidth * CGFloat(i) / 15, height: btnWidth * CGFloat(i) / 15)
@@ -907,20 +973,39 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       
       eraserOptionPanelView?.addSubview(btn)
       btn.addTarget(self, action: #selector(changeEraserSize), for: .touchUpInside)
+        counter += 1
     }
 
-    eraserOptionPanelView?.addSubview(eraserBtn)
+    //eraserOptionPanelView?.addSubview(eraserBtn)
+    eraserOptionPanelView?.addSubview(cancelBtn)
   }
   
   func loadPenOptionPanel(){
-
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = width / 15
-    let btnOffsetY:CGFloat = panelHeight / 10 + btnHeight / 1.8
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 25
+        btnHeight = 25
+        btnSpacing = 5
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
     penOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     penOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
@@ -933,38 +1018,39 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     penOptionPanelView?.layer.addSublayer(border)
     
     //Color
+    // red yellow green blue black
     //Row 1: Red, Yellow
-    let redBtn = UIButton(frame: CGRect(x: btnOffsetX, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let redBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-4*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     redBtn.backgroundColor = UIColor.red
     redBtn.layer.cornerRadius = btnWidth / 2
     redBtn.tag = 1
     redBtn.addTarget(self, action: #selector(changePenColor), for: .touchUpInside)
     
-    let yellowBtn = UIButton(frame: CGRect(x: btnOffsetX + 1 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let yellowBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-3*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     yellowBtn.tag = 2
     yellowBtn.layer.cornerRadius = btnWidth / 2
     yellowBtn.backgroundColor = UIColor.yellow
     yellowBtn.addTarget(self, action: #selector(changePenColor), for: .touchUpInside)
     //Row 2: Green, Blue
-    let greenBtn = UIButton(frame: CGRect(x: btnOffsetX + 2 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let greenBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-2*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     greenBtn.backgroundColor = UIColor.green
     greenBtn.layer.cornerRadius = btnWidth / 2
     greenBtn.tag = 3
     greenBtn.addTarget(self, action: #selector(changePenColor), for: .touchUpInside)
     
-    let blueBtn = UIButton(frame: CGRect(x: btnOffsetX + 3 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let blueBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-1*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     blueBtn.tag = 4
     blueBtn.backgroundColor = UIColor.blue
     blueBtn.layer.cornerRadius = btnWidth / 2
     blueBtn.addTarget(self, action: #selector(changePenColor), for: .touchUpInside)
     //Row 3: Purple, Black
-    let purpleBtn = UIButton(frame: CGRect(x: btnOffsetX + 4 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
-    purpleBtn.backgroundColor = UIColor.purple
-    purpleBtn.layer.cornerRadius = btnWidth / 2
-    purpleBtn.tag = 5
-    purpleBtn.addTarget(self, action: #selector(changePenColor), for: .touchUpInside)
+//    let purpleBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-1*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
+//    purpleBtn.backgroundColor = UIColor.purple
+//    purpleBtn.layer.cornerRadius = btnWidth / 2
+//    purpleBtn.tag = 5
+//    purpleBtn.addTarget(self, action: #selector(changePenColor), for: .touchUpInside)
     
-    let blackBtn = UIButton(frame: CGRect(x: btnOffsetX + 5 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let blackBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-btnWidth, y: btnOffsetY, width: btnWidth, height: btnHeight))
     blackBtn.tag = 6
     blackBtn.layer.cornerRadius = btnWidth / 2
     blackBtn.backgroundColor = UIColor.black
@@ -987,6 +1073,12 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     penLongPress.delaysTouchesBegan = false
     penBtn.addGestureRecognizer(penLongPress)
     
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    
+    let cancelImage = UIImage(named: "cross")
+    cancelBtn.setImage(cancelImage, for: .normal)
+    cancelBtn.addTarget(self, action: #selector(hidePenOption2(_:)), for: .touchUpInside)
+    
     //Create Label
     penOptionColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 6 * btnSpacing, y: btnOffsetY + btnHeight, width:btnWidth, height: btnHeight / 10))
     penOptionColorLabel?.clipsToBounds = true
@@ -994,8 +1086,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     penOptionColorLabel?.backgroundColor = penColor
     
     //Create size button
+    var counter:CGFloat = 0
     for i in 7...10 {
-      let btn = UIButton(frame: CGRect(x: btnOffsetX + CGFloat(i) * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: btnOffsetY, width: btnWidth, height: btnHeight))
       btn.backgroundColor = UIColor.cyan
       btn.layer.cornerRadius = btnWidth / 2
       let size:CGSize = CGSize(width: btnWidth * CGFloat(i) / 15, height: btnWidth * CGFloat(i) / 15)
@@ -1013,28 +1106,48 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       
       penOptionPanelView?.addSubview(btn)
       btn.addTarget(self, action: #selector(changePenSize), for: .touchUpInside)
+        counter += 1
     }
     
     penOptionPanelView?.addSubview(redBtn)
     penOptionPanelView?.addSubview(yellowBtn)
     penOptionPanelView?.addSubview(greenBtn)
     penOptionPanelView?.addSubview(blueBtn)
-    penOptionPanelView?.addSubview(purpleBtn)
+    //penOptionPanelView?.addSubview(purpleBtn)
     penOptionPanelView?.addSubview(blackBtn)
     
-    penOptionPanelView?.addSubview(penBtn)
-    penOptionPanelView?.addSubview(penOptionColorLabel!)
+    //penOptionPanelView?.addSubview(penBtn)
+    penOptionPanelView?.addSubview(cancelBtn)
+    //penOptionPanelView?.addSubview(penOptionColorLabel!)
     
   }
   
   func loadPencilOptionPanel(){
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = width / 15
-    let btnOffsetY:CGFloat = panelHeight / 10 + btnHeight / 1.8
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 30
+        btnHeight = 30
+        btnSpacing = 10
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
     pencilOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     pencilOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
@@ -1063,9 +1176,16 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     pencilLongPress.delaysTouchesBegan = false
     pencilBtn.addGestureRecognizer(pencilLongPress)
     
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    
+    let cancelImage = UIImage(named: "cross")
+    cancelBtn.setImage(cancelImage, for: .normal)
+    cancelBtn.addTarget(self, action: #selector(hidePencilOption2(_:)), for: .touchUpInside)
+    
     //Create size button
+    var counter:CGFloat = 0
     for i in 7...10 {
-      let btn = UIButton(frame: CGRect(x: btnOffsetX + CGFloat(i) * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: btnOffsetY, width: btnWidth, height: btnHeight))
       btn.backgroundColor = UIColor.cyan
       btn.layer.cornerRadius = btnWidth / 2
       let size:CGSize = CGSize(width: btnWidth * CGFloat(i) / 15, height: btnWidth * CGFloat(i) / 15)
@@ -1083,63 +1203,83 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       
       pencilOptionPanelView?.addSubview(btn)
       btn.addTarget(self, action: #selector(changePencilSize), for: .touchUpInside)
+        counter += 1
     }
     
-    pencilOptionPanelView?.addSubview(pencilBtn)
+    //pencilOptionPanelView?.addSubview(pencilBtn)
+    pencilOptionPanelView?.addSubview(cancelBtn)
   }
   
   func loadHighlightOptionPanel(){
     let top:CGFloat = height
     let left:CGFloat = 0
-    let btnWidth:CGFloat = 50
-    let btnHeight:CGFloat = 50
-    let btnSpacing:CGFloat = width / 15
-    let btnOffsetY:CGFloat = panelHeight / 10 + btnHeight / 1.8
-    let btnOffsetX:CGFloat = panelWidth / 15
+    var btnWidth:CGFloat = 50
+    var btnHeight:CGFloat = 50
+    var btnSpacing:CGFloat = 10
+    var btnOffsetY:CGFloat = 20
+    var btnOffsetX:CGFloat = panelWidth / 15
+    
+    switch Device.DEVICE {
+    case .phone:
+        // It's an iPhone
+        btnWidth = 25
+        btnHeight = 25
+        btnSpacing = 5
+        btnOffsetY = 10
+        btnOffsetX = panelWidth / 4
+        break
+    default:
+        btnWidth = 50
+        btnHeight = 50
+        btnSpacing = 10
+        btnOffsetY = 20
+        btnOffsetX = panelWidth / 4
+        break
+    }
     highlightOptionPanelView = UIView(frame: CGRect(x: left, y: top, width: panelWidth, height: panelHeight))
     highlightOptionPanelView?.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
     //Put content here
     
     let border = CALayer()
     border.borderColor = navBarColor.cgColor
-    border.frame = CGRect(x: 0, y: 0, width:  panelWidth, height: 1.0)
+    border.frame = CGRect(x: 0, y: 0, width: panelWidth, height: 1.0)
     border.borderWidth = 2.0
     
     highlightOptionPanelView?.layer.addSublayer(border)
     
     //Color
     //Row 1: Red, Yellow
-    let redBtn = UIButton(frame: CGRect(x: btnOffsetX, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let redBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-4*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     redBtn.backgroundColor = UIColor.red
     redBtn.layer.cornerRadius = btnWidth / 2
     redBtn.tag = 1
     redBtn.addTarget(self, action: #selector(changeHighlightColor), for: .touchUpInside)
     
-    let yellowBtn = UIButton(frame: CGRect(x: btnOffsetX + 1 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let yellowBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-3*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     yellowBtn.tag = 2
     yellowBtn.layer.cornerRadius = btnWidth / 2
     yellowBtn.backgroundColor = UIColor.yellow
     yellowBtn.addTarget(self, action: #selector(changeHighlightColor), for: .touchUpInside)
     //Row 2: Green, Blue
-    let greenBtn = UIButton(frame: CGRect(x: btnOffsetX + 2 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let greenBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-2*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     greenBtn.backgroundColor = UIColor.green
     greenBtn.layer.cornerRadius = btnWidth / 2
     greenBtn.tag = 3
     greenBtn.addTarget(self, action: #selector(changeHighlightColor), for: .touchUpInside)
     
-    let blueBtn = UIButton(frame: CGRect(x: btnOffsetX + 3 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let blueBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-(btnWidth)-1*(btnWidth+btnSpacing), y: btnOffsetY, width: btnWidth, height: btnHeight))
     blueBtn.tag = 4
     blueBtn.backgroundColor = UIColor.blue
     blueBtn.layer.cornerRadius = btnWidth / 2
     blueBtn.addTarget(self, action: #selector(changeHighlightColor), for: .touchUpInside)
     //Row 3: Purple, Black
-    let purpleBtn = UIButton(frame: CGRect(x: btnOffsetX + 4 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
-    purpleBtn.backgroundColor = UIColor.purple
-    purpleBtn.layer.cornerRadius = btnWidth / 2
-    purpleBtn.tag = 5
-    purpleBtn.addTarget(self, action: #selector(changeHighlightColor), for: .touchUpInside)
+//    let purpleBtn = UIButton(frame: CGRect(x: btnOffsetX + 4 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+//    purpleBtn.backgroundColor = UIColor.purple
+//    purpleBtn.layer.cornerRadius = btnWidth / 2
+//    purpleBtn.tag = 5
+//    purpleBtn.addTarget(self, action: #selector(changeHighlightColor), for: .touchUpInside)
     
-    let blackBtn = UIButton(frame: CGRect(x: btnOffsetX + 5 * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    let blackBtn = UIButton(frame: CGRect(x: (panelWidth/2)-(btnSpacing/2)-btnWidth, y: btnOffsetY, width: btnWidth, height: btnHeight))
     blackBtn.tag = 6
     blackBtn.layer.cornerRadius = btnWidth / 2
     blackBtn.backgroundColor = UIColor.black
@@ -1151,7 +1291,6 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     highlightBtn.setImage(highlightImage, for: .normal)
     highlightBtn.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI))
     
-    
     highlightBtn.setTitle("Highlight", for: .normal)
     highlightBtn.addTarget(self, action: #selector(highlightBtnTapped), for: .touchUpInside)
     highlightBtn.titleLabel?.backgroundColor = UIColor.darkGray
@@ -1162,6 +1301,12 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     highlightLongPress.delaysTouchesBegan = false
     highlightBtn.addGestureRecognizer(highlightLongPress)
     
+    let cancelBtn = UIButton(frame: CGRect(x: 10, y: btnOffsetY, width: btnWidth, height: btnHeight))
+    
+    let cancelImage = UIImage(named: "cross")
+    cancelBtn.setImage(cancelImage, for: .normal)
+    cancelBtn.addTarget(self, action: #selector(hideHighlightOption2(_:)), for: .touchUpInside)
+    
     //Create Label
     highlightOptionColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 6 * btnSpacing, y: btnOffsetY + btnHeight, width:btnWidth, height: btnHeight / 10))
     highlightOptionColorLabel?.clipsToBounds = true
@@ -1169,8 +1314,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     highlightOptionColorLabel?.backgroundColor = UIColor.yellow
     
     //Create size button
+    var counter:CGFloat = 0
     for i in 7...10 {
-      let btn = UIButton(frame: CGRect(x: btnOffsetX + CGFloat(i) * btnSpacing, y: btnOffsetY, width: btnWidth, height: btnHeight))
+      let btn = UIButton(frame: CGRect(x: (panelWidth/2)+(btnSpacing/2)+(counter*(btnWidth+btnSpacing)), y: btnOffsetY, width: btnWidth, height: btnHeight))
       btn.backgroundColor = UIColor.cyan
       btn.layer.cornerRadius = btnWidth / 2
       let size:CGSize = CGSize(width: btnWidth * CGFloat(i) / 15, height: btnWidth * CGFloat(i) / 15)
@@ -1188,6 +1334,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       
       highlightOptionPanelView?.addSubview(btn)
       btn.addTarget(self, action: #selector(changeHighlightSize), for: .touchUpInside)
+        counter += 1
     }
     
     //Make all the view visible
@@ -1195,19 +1342,22 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     highlightOptionPanelView?.addSubview(yellowBtn)
     highlightOptionPanelView?.addSubview(greenBtn)
     highlightOptionPanelView?.addSubview(blueBtn)
-    highlightOptionPanelView?.addSubview(purpleBtn)
+    //highlightOptionPanelView?.addSubview(purpleBtn)
     highlightOptionPanelView?.addSubview(blackBtn)
     
-    highlightOptionPanelView?.addSubview(highlightBtn)
-    highlightOptionPanelView?.addSubview(highlightOptionColorLabel!)
+    //highlightOptionPanelView?.addSubview(highlightBtn)
+    highlightOptionPanelView?.addSubview(cancelBtn)
+    //highlightOptionPanelView?.addSubview(highlightOptionColorLabel!)
   }
   
   //Btn handler
   func penBtnTapped(_ sender: UIButton){
     //Set draw mode to pen
     setMyPenMode("pen")
+    print("You are using pen")
     //Reset button state
     resetBtn()
+    penBtn?.backgroundColor = UIColor.lightGray
     penBtn?.titleLabel?.backgroundColor = UIColor.darkGray
   }
   
@@ -1216,15 +1366,32 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     setMyPenMode("pencil")
     //Reset button state
     resetBtn()
+    pencilBtn?.backgroundColor = UIColor.lightGray
     pencilBtn?.titleLabel?.backgroundColor = UIColor.darkGray
   }
   
   func textBoxBtnTapped(_ sender: UIButton){
-    //Set draw mode to text Box
-    setMyPenMode("textBox")
-    //Reset button state
-    resetBtn()
-    textBoxBtn?.titleLabel?.backgroundColor = UIColor.darkGray
+//    //Set draw mode to text Box
+//    setMyPenMode("textBox")
+//    //Reset button state
+//    resetBtn()
+//    textBoxBtn?.backgroundColor = UIColor.lightGray
+//    textBoxBtn?.titleLabel?.backgroundColor = UIColor.darkGray
+    //Hide the original navBar
+    //navBar?.isHidden = true
+    //Hide the pen control panel
+    //panelView?.isHidden = true
+    //Disable drawing as well
+    PDFViewControllers[pageCurrent].enableComment()
+    //Make comment panel view visible
+    self.view.addSubview(commentPanelView!)
+    self.view.addSubview(commentNavBar!)
+    commentNavBar?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: -100))
+    commentPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 200))
+    UIView.animate(withDuration: 0.5, animations: {
+        self.commentNavBar?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+        self.commentPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+    })
   }
   
   func eraserBtnTapped(_ sender: UIButton){
@@ -1232,6 +1399,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     setMyPenMode("eraser")
     //Reset button state
     resetBtn()
+    eraserBtn?.backgroundColor = UIColor.lightGray
     eraserBtn?.titleLabel?.backgroundColor = UIColor.darkGray
   }
   
@@ -1240,6 +1408,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     setMyPenMode("highlight")
     //Reset button state
     resetBtn()
+    highlightBtn?.backgroundColor = UIColor.lightGray
     highlightBtn?.titleLabel?.backgroundColor = UIColor.darkGray
   }
   
@@ -1304,6 +1473,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     panelView?.isHidden = true
     //Disable drawing as well
     PDFViewControllers[pageCurrent].enableComment()
+    print("comment btn tapped")
     //Make comment panel view visible
     self.view.addSubview(commentPanelView!)
     self.view.addSubview(commentNavBar!)
@@ -1377,10 +1547,15 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func resetBtn() {
     penBtn?.titleLabel?.backgroundColor = UIColor.clear
+    penBtn?.backgroundColor = UIColor.clear
     pencilBtn?.titleLabel?.backgroundColor = UIColor.clear
+    pencilBtn?.backgroundColor = UIColor.clear
     eraserBtn?.titleLabel?.backgroundColor = UIColor.clear
+    eraserBtn?.backgroundColor = UIColor.clear
     highlightBtn?.titleLabel?.backgroundColor = UIColor.clear
+    highlightBtn?.backgroundColor = UIColor.clear
     textBoxBtn?.titleLabel?.backgroundColor = UIColor.clear
+    textBoxBtn?.backgroundColor = UIColor.clear
   }
   
   func showPagesOverview(_ sender: UIScreenEdgePanGestureRecognizer){
@@ -1438,6 +1613,18 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       })
     }
   }
+    func hidePenOption2(_ sender: UIButton){
+            //Show panel View
+            panelView?.isHidden = false
+            //Hide penOption panel View
+            panelView?.layer.opacity = 0.001
+            UIView.animate(withDuration: 0.3, animations: {
+                self.panelView?.layer.opacity = 1
+                self.penOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+            }, completion: { _ in
+                self.penOptionPanelView?.removeFromSuperview()
+            })
+    }
   
   func showPencilOption(_ sender: UILongPressGestureRecognizer){
     if sender.state == .began {
@@ -1466,11 +1653,23 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       })
     }
   }
+    func hidePencilOption2(_ sender: UIButton){
+            //Show panel View
+            panelView?.isHidden = false
+            //Hide eraser Option panel View
+            panelView?.layer.opacity = 0.001
+            UIView.animate(withDuration: 0.3, animations: {
+                self.panelView?.layer.opacity = 1
+                self.pencilOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+            }, completion: { _ in
+                self.pencilOptionPanelView?.removeFromSuperview()
+            })
+    }
   
   func showEraserOption(_ sender: UILongPressGestureRecognizer){
     if sender.state == .began {
       //Hide panel View
-      panelView?.isHidden = true
+      //panelView?.isHidden = true
       //Show eraser Option panel View
       self.view.addSubview(eraserOptionPanelView!)
       eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
@@ -1495,6 +1694,20 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       })
     }
   }
+    func hideEraserOption2(_ sender: UIButton){
+            //Show panel View
+        //if self.penMode == "eraser" {
+            panelView?.isHidden = false
+            //Hide eraser Option panel View
+            panelView?.layer.opacity = 0.001
+            UIView.animate(withDuration: 0.3, animations: {
+                self.panelView?.layer.opacity = 1
+                self.eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+            }, completion: { _ in
+                self.eraserOptionPanelView?.removeFromSuperview()
+            })
+        //}
+    }
   
   func showHighlightOption(_ sender: UILongPressGestureRecognizer){
     if sender.state == .began {
@@ -1524,6 +1737,18 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       
     }
   }
+    func hideHighlightOption2(_ sender: UIButton){
+            //Show panel View
+            panelView?.isHidden = false
+            //Hide penOption panel View
+            panelView?.layer.opacity = 0.001
+            UIView.animate(withDuration: 0.3, animations: {
+                self.panelView?.layer.opacity = 1
+                self.highlightOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+            }, completion: { _ in
+                self.highlightOptionPanelView?.removeFromSuperview()
+            })
+    }
   
   func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
     return true

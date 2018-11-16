@@ -56,6 +56,8 @@ class PDFViewController: UIViewController, UIScrollViewDelegate{
     
     //Create canvas for drawing
     canvas = AssignmentRecordCanvas(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+    print(view.frame.size.width)
+    print(view.frame.size.height)
     self.view.backgroundColor = UIColor.white
     canvas?.parentController = self.parent as! PDFPageViewController?
     canvas?.isUserInteractionEnabled = true
