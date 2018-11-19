@@ -63,7 +63,7 @@ class AssignmentRecordCanvas: UIImageView {
       break
     case "eraser":
       size = parentController!.eraserSize
-      color = nil
+      color = UIColor.clear
       break
     case "highlight":
       size = parentController!.highlightSize
@@ -119,7 +119,7 @@ class AssignmentRecordCanvas: UIImageView {
       break
     case "eraser":
       size = parentController!.eraserSize
-      color = nil
+      color = UIColor.clear
       break
     case "highlight":
       size = parentController!.highlightSize
