@@ -123,6 +123,7 @@ class Convertor {
   
   private static func drawObjectToLocalDataJson(drawObject: DrawObject) -> JSON {
     var json: JSON = ["className": "", "data": [], "id": ""]
+    print (drawObject)
     
     let dataJSON = self.drawObjectToJson(drawObject: drawObject)
     var className: String
@@ -143,7 +144,7 @@ class Convertor {
   }
   
   private static func drawObjectToDataJson(drawObject: DrawObject, pageId: String) -> JSON {
-    var json: JSON = ["pageId": 0, "className": "", "data": "", "refId": ""]
+    var json: JSON = ["pageId": 0, "className": "", "data": "", "refId": "", "device": []]
     
     let dataJSON = self.drawObjectToJson(drawObject: drawObject)
     let dataString = dataJSON.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions(rawValue: 0))!
@@ -156,10 +157,12 @@ class Convertor {
     case DrawObjectType.ErasedLinePath:
       className = "ErasedLinePath"
     }
+    let device = [UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height]
     json["pageId"] = JSON(pageId)
     json["className"] = JSON(className)
     json["data"] = JSON(dataString)
     json["refId"] = JSON(drawObject.refId)
+    json["device"] = JSON(device)
     //print ("drawObjectToDataJson# json=\(json)")
     return json
   }
@@ -174,7 +177,7 @@ class Convertor {
     case DrawObjectType.ErasedLinePath:
       json = self.EraserLinePathToJson(eraserLinePath: drawObject as! ErasedLinePath)
     }
-    //print ("drawObjectToJson# json=\(json)")
+    print ("drawObjectToJson# json=\(json)")
     return json
   }
   
@@ -252,7 +255,7 @@ class Convertor {
     }
     
     let json = JSON(jsonArr)
-    //print ("pageDrawObjectsToJson# json=\(json)")
+    print ("pageDrawObjectsToJson# json=\(json)")
     return json
   }
     
@@ -430,13 +433,21 @@ class Convertor {
   
   static func jsonToLinePath(json: JSON) -> LinePath? {
     if let colorString = json["data"]["pointColor"].string,
-      let lineWidth = json["data"]["pointSize"].float,
-      let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array,
-      let smoothPointCoordinateParis = json["data"]["smoothedPointCoordinatePairs"].array,
-      let refId = json["id"].string{
+        let lineWidth = json["data"]["pointSize"].float,
+        let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array,
+        let smoothPointCoordinateParis = json["data"]["smoothedPointCoordinatePairs"].array,
+        let refId = json["id"].string,
+        let device = json["device"].array{
       
       var category = "pen"
       print ("refId=\(refId)")
+        var savedDeviceWidth = Double(device[0].float!)
+        var currentDeviceWidth = Double(Device.SCREEN_WIDTH)
+        var savedDeviceHeight = Double(device[1].float!)
+        var currentDeviceHeight = Double(Device.SCREEN_HEIGHT)
+        var widthRatio = currentDeviceWidth/savedDeviceWidth
+        var heightRatio = currentDeviceHeight/savedDeviceHeight
+        print ("deviceWidth=\(savedDeviceWidth) deviceHeight=\(savedDeviceHeight)")
       let colorArray = Convertor.stringToRGB(rgbString: colorString)
       let color: UIColor
       switch(colorArray.count){
@@ -460,12 +471,12 @@ class Convertor {
       
       var positions = [CGPoint]()
       for i in 0...pointCoordinatePairs.count - 1 {
-        positions += [CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)]
+        positions += [CGPoint(x: pointCoordinatePairs[i][0].double! * widthRatio, y: pointCoordinatePairs[i][1].double! * heightRatio)]
       }
       
       var smoothPositions = [CGPoint]()
       for i in 0...smoothPointCoordinateParis.count - 1 {
-        smoothPositions += [CGPoint(x: smoothPointCoordinateParis[i][0].double!, y: smoothPointCoordinateParis[i][1].double!)]
+        smoothPositions += [CGPoint(x: smoothPointCoordinateParis[i][0].double! * widthRatio, y: smoothPointCoordinateParis[i][1].double! * heightRatio)]
       }
       
       let linePath = LinePath(positions: positions, smoothPositions: smoothPositions, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)

@@ -14,6 +14,9 @@ class LinePath: DrawObject {
   var color: UIColor
   var lineWidth: CGFloat
   var category: String
+    
+    var deviceWidth: CGFloat
+    var deviceHeight: CGFloat
   
   var pageID: Int
   
@@ -30,6 +33,9 @@ class LinePath: DrawObject {
     self.lineWidth = lineWidth
     self.category = category
     
+    self.deviceWidth = UIScreen.main.bounds.size.width
+    self.deviceHeight = UIScreen.main.bounds.size.height
+    
     self.pageID = pageID
     
     self.userID = userID
@@ -39,30 +45,30 @@ class LinePath: DrawObject {
     super.init(type: DrawObjectType.LinePath, refId: refId)
   }
   
-  static func toJSON(_ linePath: LinePath) -> JSON {
-    var jsonDict = Dictionary<String, Any>()
-    var subJSON = Dictionary<String, Any>()
-    var json: JSON?
-    
-    subJSON["category"] = linePath.category
-    subJSON["pointColor"] = linePath.color
-    subJSON["pointSize"] = linePath.lineWidth
-    subJSON["pointCoordinatePairs"] = linePath.positions
-    subJSON["smoothedPointCoordinatePairs"] = linePath.positions
-    
-    
-    jsonDict["pageID"] = linePath.pageID
-    jsonDict["assignmentID"] = linePath.assignmentID
-    jsonDict["assignmentRecordID"] = linePath.assignmentRecordID
-    jsonDict["className"] = linePath.type
-    jsonDict["data"] = subJSON
-    
-    //print(jsonDict)
-    json = JSON(jsonDict)
-    //print(json?["pointCoordinatePairs"].arrayObject as! [[Float]])
-    
-    return json!
-  }
+//  static func toJSON(_ linePath: LinePath) -> JSON {
+//    var jsonDict = Dictionary<String, Any>()
+//    var subJSON = Dictionary<String, Any>()
+//    var json: JSON?
+//    
+//    subJSON["category"] = linePath.category
+//    subJSON["pointColor"] = linePath.color
+//    subJSON["pointSize"] = linePath.lineWidth
+//    subJSON["pointCoordinatePairs"] = linePath.positions
+//    subJSON["smoothedPointCoordinatePairs"] = linePath.positions
+//    
+//    
+//    jsonDict["pageID"] = linePath.pageID
+//    jsonDict["assignmentID"] = linePath.assignmentID
+//    jsonDict["assignmentRecordID"] = linePath.assignmentRecordID
+//    jsonDict["className"] = linePath.type
+//    jsonDict["data"] = subJSON
+//    
+//    //print(jsonDict)
+//    json = JSON(jsonDict)
+//    //print(json?["pointCoordinatePairs"].arrayObject as! [[Float]])
+//    
+//    return json!
+//  }
   
   
 }

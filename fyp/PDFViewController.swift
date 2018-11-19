@@ -13,6 +13,7 @@ class PDFViewController: UIViewController, UIScrollViewDelegate{
   var scrollView: UIScrollView?
   var pdfView: UIImageView?
   var canvas: AssignmentRecordCanvas?
+    var parentCanvas: AssignmentRecordCanvas?
   var commentView: CommentView?
   var containerView: UIView?
   
@@ -46,6 +47,8 @@ class PDFViewController: UIViewController, UIScrollViewDelegate{
       let height = parent.height
       //Get the UIImage of pdf
       let pdf = drawPDF(parent.PDFDocument!, pageNumber, width, height)
+        print(width)
+        print(height)
       
       //Wrap the UIImage into UIImageView to be able to add into scrollview
       pdfView = UIImageView(image: pdf)
@@ -58,6 +61,12 @@ class PDFViewController: UIViewController, UIScrollViewDelegate{
     canvas = AssignmentRecordCanvas(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
     print(view.frame.size.width)
     print(view.frame.size.height)
+    let savedWidth = Device.IPAD_PRO_129_WIDTH
+    let savedHeight = Device.IPAD_PRO_129_HEIGHT
+    let tap1 = CGPoint(x: 100, y: 113.5)
+    let tap2 = CGPoint(x: 37.5, y: 1303)
+    let convertedTap = CGPoint(x: tap2.x * view.frame.size.width/savedWidth, y: tap2.y * view.frame.size.height/savedHeight)
+    print(convertedTap)
     self.view.backgroundColor = UIColor.white
     canvas?.parentController = self.parent as! PDFPageViewController?
     canvas?.isUserInteractionEnabled = true

@@ -321,7 +321,7 @@ class AppAPI {
   func addAnnotation(fileId: String, pageDrawObjects: [Int: [DrawObject]], version: String, gradeId: String, completion: @escaping (Bool, ConnectionError?)->()) {
     var postString: String
     let urlWithParam: String
-    
+    print(pageDrawObjects)
     switch self.connectorType {
     case ConnectorType.Veriguide:
       // 1. create url with userId as parameters
@@ -338,6 +338,7 @@ class AppAPI {
     print ("addAnnotation# urlWithParam = \(urlWithParam)")
     
     if let json = Convertor.pageDrawObjectsToJson(pageDrawObjects: pageDrawObjects){
+        print(json)
       postString = "data=" + json.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions(rawValue: 0))! + "&version=" + version + "&gradeId=" + fileId
       self.connector.sendPostRequest(urlString: urlWithParam, postString: postString){
         (data, error) in
@@ -346,6 +347,7 @@ class AppAPI {
           completion(false, error)
           return
         } else {
+            print(data)
           completion(true, nil)
         }
       }
@@ -395,6 +397,7 @@ class AppAPI {
       // if able to get data from server,
       // parse the responseString to JSON
       let json = try! JSON(data: data!)
+        print(json)
     //  let result = self.writeLocalAnnotation(fileId: fileId, pageId: pageId, content: dataString!)
 //      if !result {
 //        print ("Fail to write back annotation into loca file")
