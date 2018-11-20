@@ -115,7 +115,7 @@ class AssignmentRecordCanvas: UIImageView {
       break
     case "pencil":
       size = parentController!.pencilSize
-      color = parentController!.pencilTexture
+      color = UIColor.lightGray
       break
     case "eraser":
       size = parentController!.eraserSize

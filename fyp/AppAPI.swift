@@ -13,6 +13,8 @@ class AppAPI {
     var connectorType: ConnectorType
     var connector: Connector
     let fileNamePrefix = "paperless-classroom-"
+    let veriguideAPI = "https://api.veriguide.org:8084/vg-api/v1/"
+    let PDFAnnotationAPI = "http://192.168.1.142:8080/PdfAnnotations20161026/"
   
     init(){
         self.connectorType = ConnectorType.Veriguide
@@ -34,7 +36,7 @@ class AppAPI {
     func getUserInfo(completion: @escaping (User?, ConnectionError?)->()){
         print("hello")
         // let urlString = "https://api.veriguide.org:8083/vg-api/v1/user/"
-        let urlString = "https://api.veriguide.org:8084/vg-api/v1/user/"
+        let urlString = veriguideAPI+"user/"
         let urlWithParam = urlString + "?client_id=" + OAuth2Helper.oauth2.clientId!
         let token = OAuth2Helper.oauth2.accessToken
         
@@ -111,7 +113,7 @@ class AppAPI {
             let instructor_id = HomePageViewController.user!.computingId
             // let urlString = "https://api.veriguide.org:8083/vg-api/v1/"//connector.baseUrl
             print (instructor_id)
-            let urlString = "https://api.veriguide.org:8084/vg-api/v1/"
+            let urlString = veriguideAPI
             urlWithParam = urlString + "course/2016/1?client_id=" + OAuth2Helper.oauth2.clientId!
             break
             
@@ -163,7 +165,7 @@ class AppAPI {
         case ConnectorType.Veriguide:
             let instructor_id = HomePageViewController.user!.computingId
             // let urlString = "https://api.veriguide.org:8083/vg-api/v1/"
-            let urlString = "https://api.veriguide.org:8084/vg-api/v1/"
+            let urlString = veriguideAPI
             urlWithParam = urlString + "course/" + courseCode + "/assignments?client_id=" + OAuth2Helper.oauth2.clientId!
             break
             
@@ -212,7 +214,7 @@ class AppAPI {
         switch self.connectorType {
         case ConnectorType.Veriguide:
             let instructor_id = HomePageViewController.user!.computingId
-            let urlString = "https://api.veriguide.org:8084/vg-api/v1/"
+            let urlString = veriguideAPI
             urlWithParam = urlString + "assignment/" + courseCode + "/" + String(describing:asgnNum)
             urlWithParam += "/submissions?client_id=" + OAuth2Helper.oauth2.clientId! + "&computing_id=" + instructor_id
             break
@@ -249,7 +251,7 @@ class AppAPI {
     }
     
     func getAssignmentMarkingList(courseCode: String, asgnNum: Int, completion: @escaping ([AssignmentMarking]?, ConnectionError?)->()){
-        var urlWithParam = "http://localhost:8080/PdfAnnotations20161026/"
+        var urlWithParam = PDFAnnotationAPI
         urlWithParam += "marking?courseCode=" + courseCode + "&asgnNum=" + String(describing: asgnNum)
         print(urlWithParam)
         self.connector.sendGetRequest(urlString: urlWithParam) {
@@ -269,7 +271,7 @@ class AppAPI {
     
     func addAssignmentMarking(refId: Int, courseCode: String, asgnNum: Int, status: Int, score: Int? = nil, completion: @escaping (Bool, ConnectionError?)->()) {
         var postString: String
-        let urlString = "http://localhost:8080/PdfAnnotations20161026/marking"
+        let urlString = PDFAnnotationAPI+"marking"
 
         print ("addAnnotation# urlWithParam = \(urlString)")
         postString = "refId=" + String(describing:refId) + "&courseCode=" + courseCode + "&asgnNum=" + String(describing:asgnNum)
@@ -292,7 +294,7 @@ class AppAPI {
     func downloadAssignment(courseCode: String, refId: Int, completion: @escaping (String, ConnectionError?)->()) {
         var urlWithParam: String
         let instructor_id = HomePageViewController.user!.computingId
-        let urlString = "https://api.veriguide.org:8084/vg-api/v1/"
+        let urlString = veriguideAPI
         urlWithParam = urlString + "assignment/" + courseCode + "/" + String(describing:refId)
         urlWithParam += "/file?client_id=" + OAuth2Helper.oauth2.clientId! + "&computing_id=" + instructor_id
         print ("urlWithParam = \(urlWithParam)")
@@ -325,7 +327,7 @@ class AppAPI {
     switch self.connectorType {
     case ConnectorType.Veriguide:
       // 1. create url with userId as parameters
-      let urlString = "http://localhost:8080/PdfAnnotations20161026/" //connector.baseUrl
+      let urlString = PDFAnnotationAPI //connector.baseUrl
       //let param = "Course?userId=\(userId)"
       urlWithParam = urlString + "Annotations/Add"
       break
@@ -362,7 +364,7 @@ class AppAPI {
     switch self.connectorType {
     case ConnectorType.Veriguide:
       // 1. create url with userId as parameters
-        let urlString = "http://localhost:8080/PdfAnnotations20161026/" //connector.baseUrl
+        let urlString = PDFAnnotationAPI //connector.baseUrl
       //let param = "Course?userId=\(userId)"
       urlWithParam = urlString + "Annotations?version=1&gradeId=" + fileId + "&page=" + pageId
       break
