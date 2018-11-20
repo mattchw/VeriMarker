@@ -14,7 +14,7 @@ class AppAPI {
     var connector: Connector
     let fileNamePrefix = "paperless-classroom-"
     let veriguideAPI = "https://api.veriguide.org:8084/vg-api/v1/"
-    let PDFAnnotationAPI = "http://192.168.1.142:8080/PdfAnnotations20161026/"
+    let PDFAnnotationAPI = "http://localhost:8080/PdfAnnotations20161026/"
   
     init(){
         self.connectorType = ConnectorType.Veriguide
