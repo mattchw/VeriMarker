@@ -93,11 +93,11 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   var pageIsDrawn = [Int:Bool]()
   var pageLastModifiedTime = [Int:Date]()
   
-  /* Possible Modes */
-  /*
-   1. Pen
-   2. Rubber
-   3. Highlight
+  /* Possible Modes
+     1. Pen
+     2. Pencil
+     3. Highlight
+     4. Eraser
    */
   var penMode: String = "pen"
   var penSize: CGFloat = 2
@@ -113,7 +113,6 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   /* Schedueler */
   var scheduler = Scheduler(fileId: Constants.fileId, updateTimePeriod: Float(Constants.updateTimePeriod))
-  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -267,7 +266,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
           
           self.drawObjectsToPane(drawObjects: drawObjects!, pageId: self.pageCurrent)
           print ("changePage#size of drawObject=\(drawObjects?.count)")
-          self.pageDrawObjects[self.pageCurrent]? += drawObjects!
+          //self.pageDrawObjects[self.pageCurrent]? += drawObjects!
         }
         return
       }
@@ -422,7 +421,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   func loadAssignmentRecordURL() {
     
     print("Loading assignment with Reference ID: " + String(describing: (assignmentRecord?.refId)!))
-    api.downloadAssignment(courseCode: course!.code, refId: 1834277){
+    //api.downloadAssignment(courseCode: course!.code, refId: 1834277){
+    api.downloadAssignment(courseCode: course!.code, refId: (assignmentRecord?.refId)!){
         (filepath, error) in
         if (error != nil){
             //handle error here
@@ -438,6 +438,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
             
             self.pageCount = self.PDFDocument?.numberOfPages
             //DRAW records from database
+            //initialize pageDrawObjects array
             self.loadAnnotationJSON(self.pageCount!)
             
             //Init page View Controller after loading the pdf
@@ -1419,12 +1420,28 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func undoBtnTapped(_ sender: UIButton){
     //Clear the canvas
-    PDFViewControllers[pageCurrent].canvas?.undoManager?.undo()
+    print("undo btn tapped")
+//    print("what is inside pageDrawObjects? \(self.pageDrawObjects)")
+//    print("what is inside pageDrawObjects[currentPage]? \(self.pageDrawObjects[self.pageCurrent])")
+//    self.pageDrawObjects[self.pageCurrent]?.remove(at: 0)
+//    print("what is inside pageDrawObjects[currentPage]? \(self.pageDrawObjects[self.pageCurrent])")
+    //PDFViewControllers[pageCurrent].canvas?.undoManager?.undo()
+    if PDFViewControllers[pageCurrent].canvas?.image != nil {
+        PDFViewControllers[pageCurrent].canvas?.undo((PDFViewControllers[pageCurrent].canvas?.image)!)
+    } else {
+        print("cannot undo")
+    }
   }
   
   func redoBtnTapped(_ sender: UIButton){
     //Clear the canvas
-    PDFViewControllers[pageCurrent].canvas?.undoManager?.redo()
+    print("redo btn tapped")
+    if PDFViewControllers[pageCurrent].canvas?.image != nil {
+        PDFViewControllers[pageCurrent].canvas?.redo((PDFViewControllers[pageCurrent].canvas?.image)!)
+    } else {
+        print("cannot redo")
+    }
+    //PDFViewControllers[pageCurrent].canvas?.undoManager?.redo()
   }
   
   func doneBtnTapped(_ sender: UIButton){
