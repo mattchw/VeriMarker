@@ -143,7 +143,7 @@ class AssignmentRecordCanvas: UIImageView {
     }
     
     //Push Undo History
-    undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
+    //undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
     
     //Save the last Image
     //setTempImage(image)
@@ -153,7 +153,8 @@ class AssignmentRecordCanvas: UIImageView {
     parentController!.pageDrawObjects[pageId]?.append(linePath!)
     print ("AssignmentRecordCanvas#touchesEnded- positions size=\(self.saved.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parentController!.pageDrawObjects[pageId]?.count)]")
     //Add this annotation to the server
-    addAnnotation()
+    //addAnnotation()
+    saved = [CGPoint]()
   }
 
   
@@ -257,6 +258,7 @@ class AssignmentRecordCanvas: UIImageView {
     
     /* local undo */
     print("Undo")
+    
     if !self.undoStack.isEmpty {
         print("before pop \(self.undoStack)")
         self.prev=self.undoStack.popLast()
@@ -264,6 +266,15 @@ class AssignmentRecordCanvas: UIImageView {
         self.redoStack.append(self.image!)
         print("after pop \(self.undoStack)")
         setCurrentImage(self.prev)
+        
+        if((parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)! > 0){
+            print("pageDrawObjects before pop \(parentController!.pageDrawObjects)")
+            let element = parentController!.pageDrawObjects[parentController!.pageCurrent]?.popLast()
+            parentController!.redoDrawObjects[parentController!.pageCurrent]?.append(element!)
+            print("pageDrawObjects after pop \(parentController!.pageDrawObjects)")
+        } else {
+            print("pageDrawObjects is empty")
+        }
     }
     else {
         print("undoStack is empty and do nothing")
@@ -300,6 +311,15 @@ class AssignmentRecordCanvas: UIImageView {
         self.undoStack.append(self.image!)
         print("after pop \(self.redoStack)")
         setCurrentImage(self.prev)
+        
+        if((parentController!.redoDrawObjects[parentController!.pageCurrent]?.count)! > 0){
+            print("redoDrawObjects before pop \(parentController!.redoDrawObjects)")
+            let element = parentController!.redoDrawObjects[parentController!.pageCurrent]?.popLast()
+            parentController!.pageDrawObjects[parentController!.pageCurrent]?.append(element!)
+            print("redoDrawObjects after pop \(parentController!.redoDrawObjects)")
+        } else {
+            print("redoDrawObjects is empty")
+        }
     }
     else {
         print("redoStack is empty and do nothing")

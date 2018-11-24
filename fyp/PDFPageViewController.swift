@@ -1473,6 +1473,20 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: {action in
         self.addMarking(refId: self.assignmentRecord!.refId, courseCode: self.course!.code, asgnNum: self.assignment!.asgnNum, status: -1)
         //self.performSegue(withIdentifier: "backToAssignmentRecord", sender:self)
+        self.scheduler.addAnnotation(fileId: String(describing:self.assignmentRecord!.refId), lastModifiedTime: Date(), pageDrawObjects: self.pageDrawObjects)
+//        for obj in self.pageDrawObjects {
+//            if !obj.value.isEmpty {
+//                var tempPageDrawObjects = [Int:[DrawObject]]()
+//                tempPageDrawObjects[obj.key] = [DrawObject]()
+//                print("the object: \(obj)")
+//                print("the object value: \(obj.value)")
+//                print("num of items inside: \(obj.value.count)")
+//                for val in obj.value {
+//                    tempPageDrawObjects[obj.key]?.append(val)
+//                    self.scheduler.addAnnotation(fileId: String(describing:self.assignmentRecord!.refId), lastModifiedTime: Date(), pageDrawObjects: tempPageDrawObjects)
+//                }
+//            }
+//        }
         
     }))
     
@@ -1774,25 +1788,25 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func changeHighlightColor(_ sender: UIButton){
     var color = UIColor.black
-    var actualColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1)
+    var actualColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
     switch sender.tag {
     case 1: color = UIColor.red
-      actualColor = UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.1)
+      actualColor = UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.3)
       break
     case 2: color = UIColor.yellow
-      actualColor = UIColor.init(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.1)
+      actualColor = UIColor.init(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.3)
       break
     case 3: color = UIColor.green
-      actualColor = UIColor.init(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.1)
+      actualColor = UIColor.init(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.3)
       break
     case 4: color = UIColor.blue
-      actualColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.1)
+      actualColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.3)
       break
     case 5: color = UIColor.purple
-      actualColor = UIColor.init(red: 128/256, green: 0, blue: 128/256, alpha: 0.1)
+      actualColor = UIColor.init(red: 128/256, green: 0, blue: 128/256, alpha: 0.3)
       break
     case 6: color = UIColor.black
-      actualColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1)
+      actualColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
       break
     default: break
     }
