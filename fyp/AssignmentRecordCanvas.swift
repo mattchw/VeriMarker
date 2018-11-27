@@ -45,6 +45,7 @@ class AssignmentRecordCanvas: UIImageView {
             // first time
             self.undoStack.append(UIImage())
         }
+        self.redoStack.removeAll()
     }
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     touch = touches.first!
@@ -151,6 +152,7 @@ class AssignmentRecordCanvas: UIImageView {
     let linePath = LinePath(positions: self.saved, smoothPositions: self.saved, color:color!, lineWidth: size!, category: "pen", pageID: pageId,
                             userID: userID, assignmentRecordID: assignmentRecordID, assignmentID: assignmentID, refId: Utilities.getReferenceId())
     parentController!.pageDrawObjects[pageId]?.append(linePath!)
+    parentController!.redoDrawObjects[pageId]?.removeAll()
     print ("AssignmentRecordCanvas#touchesEnded- positions size=\(self.saved.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parentController!.pageDrawObjects[pageId]?.count)]")
     //Add this annotation to the server
     //addAnnotation()

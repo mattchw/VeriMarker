@@ -1467,26 +1467,14 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
                 self?.addMarking(refId: (self!.assignmentRecord?.refId)!, courseCode: (self?.course!.code)!, asgnNum: (self?.assignment!.asgnNum)!, status: 1, score: score)
         }))
         
-        self?.present(innerAlert, animated: true, completion: nil)}))
+        self?.present(innerAlert, animated: true, completion: nil)
+    }))
     
     
     alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: {action in
         self.addMarking(refId: self.assignmentRecord!.refId, courseCode: self.course!.code, asgnNum: self.assignment!.asgnNum, status: -1)
         //self.performSegue(withIdentifier: "backToAssignmentRecord", sender:self)
-        self.scheduler.addAnnotation(fileId: String(describing:self.assignmentRecord!.refId), lastModifiedTime: Date(), pageDrawObjects: self.pageDrawObjects)
-//        for obj in self.pageDrawObjects {
-//            if !obj.value.isEmpty {
-//                var tempPageDrawObjects = [Int:[DrawObject]]()
-//                tempPageDrawObjects[obj.key] = [DrawObject]()
-//                print("the object: \(obj)")
-//                print("the object value: \(obj.value)")
-//                print("num of items inside: \(obj.value.count)")
-//                for val in obj.value {
-//                    tempPageDrawObjects[obj.key]?.append(val)
-//                    self.scheduler.addAnnotation(fileId: String(describing:self.assignmentRecord!.refId), lastModifiedTime: Date(), pageDrawObjects: tempPageDrawObjects)
-//                }
-//            }
-//        }
+        //self.scheduler.addAnnotation(fileId: String(describing:self.assignmentRecord!.refId), lastModifiedTime: Date(), pageDrawObjects: self.pageDrawObjects)
         
     }))
     
@@ -1979,7 +1967,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   /* API CALL */
   func finishAnnotation() {
-    
+    self.scheduler.addAnnotation(fileId: String(describing:self.assignmentRecord!.refId), lastModifiedTime: Date(), pageDrawObjects: self.pageDrawObjects)
   }
   
   func getAnnotation() {
