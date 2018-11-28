@@ -21,6 +21,9 @@ class AssignmentRecordCanvas: UIImageView {
   //var drawingImage: UIImage?
   
   var temp: UIImage?
+    var prev: UIImage?
+    var undoStack: [UIImage] = []
+    var redoStack: [UIImage] = []
   var parentController: PDFPageViewController?
   var saved = [CGPoint]()
   
@@ -35,6 +38,15 @@ class AssignmentRecordCanvas: UIImageView {
   var current = CGPoint()
     
   /* Draw Method */
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        if getImage() != nil {
+            self.undoStack.append(getImage()!)
+        } else {
+            // first time
+            self.undoStack.append(UIImage())
+        }
+        self.redoStack.removeAll()
+    }
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     touch = touches.first!
     if touch == nil { return }
@@ -132,17 +144,19 @@ class AssignmentRecordCanvas: UIImageView {
     }
     
     //Push Undo History
-    undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
+    //undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
     
     //Save the last Image
-    setTempImage(image)
+    //setTempImage(image)
     
     let linePath = LinePath(positions: self.saved, smoothPositions: self.saved, color:color!, lineWidth: size!, category: "pen", pageID: pageId,
                             userID: userID, assignmentRecordID: assignmentRecordID, assignmentID: assignmentID, refId: Utilities.getReferenceId())
     parentController!.pageDrawObjects[pageId]?.append(linePath!)
+    parentController!.redoDrawObjects[pageId]?.removeAll()
     print ("AssignmentRecordCanvas#touchesEnded- positions size=\(self.saved.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parentController!.pageDrawObjects[pageId]?.count)]")
     //Add this annotation to the server
-    addAnnotation()
+    //addAnnotation()
+    saved = [CGPoint]()
   }
 
   
@@ -220,11 +234,13 @@ class AssignmentRecordCanvas: UIImageView {
   }
   
   func setTempImage(_ new:UIImage?) {
+    print("set temp Image")
     self.temp = nil
     self.temp = new
   }
   
   func setCurrentImage(_ new:UIImage?) {
+    print("set current Image")
     self.image = new
   }
   
@@ -240,35 +256,85 @@ class AssignmentRecordCanvas: UIImageView {
   func undo(_ sender: UIImage) {
     //undoManager?.registerUndo(withTarget: self, selector: #selector(redo), object: image)
     //drawingImage = sender
-    setCurrentImage(sender)
-    setTempImage(sender)
-    //print("Undo")
-    //let parent = parentController!
-    if((parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)! > 0){
-      let firstDrawObjects = parentController!.pageDrawObjects[parentController!.pageCurrent]?[0]
-      parentController!.pageDrawObjects[parentController!.pageCurrent]?.removeFirst()
-      parentController!.redoDrawObjects[parentController!.pageCurrent]?.append(firstDrawObjects!)
-      
-      print ("pop pageDrawObjects[\(parentController!.pageCurrent)], size=\(parentController!.pageDrawObjects[parentController!.pageCurrent]?.count), redoDrawObjects=\(parentController!.redoDrawObjects[parentController!.pageCurrent]?.count)")
+    //setCurrentImage(sender)
+    
+    /* local undo */
+    print("Undo")
+    
+    if !self.undoStack.isEmpty {
+        print("before pop \(self.undoStack)")
+        self.prev=self.undoStack.popLast()
+        self.temp = self.prev
+        self.redoStack.append(self.image!)
+        print("after pop \(self.undoStack)")
+        setCurrentImage(self.prev)
+        
+        if((parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)! > 0){
+            print("pageDrawObjects before pop \(parentController!.pageDrawObjects)")
+            let element = parentController!.pageDrawObjects[parentController!.pageCurrent]?.popLast()
+            parentController!.redoDrawObjects[parentController!.pageCurrent]?.append(element!)
+            print("pageDrawObjects after pop \(parentController!.pageDrawObjects)")
+        } else {
+            print("pageDrawObjects is empty")
+        }
     }
+    else {
+        print("undoStack is empty and do nothing")
+    }
+//    print("before pop \(self.undoStack)")
+//    self.prev=self.undoStack.popLast()
+//    print("after pop \(self.undoStack)")
+//    self.image = self.prev
+    //setTempImage(sender)
+//    print("hi")
+//    //print("Undo")
+//    //let parent = parentController!
+//    if((parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)! > 0){
+//      let firstDrawObjects = parentController!.pageDrawObjects[parentController!.pageCurrent]?[0]
+//      parentController!.pageDrawObjects[parentController!.pageCurrent]?.removeFirst()
+//      parentController!.redoDrawObjects[parentController!.pageCurrent]?.append(firstDrawObjects!)
+//
+//      print ("pop pageDrawObjects[\(parentController!.pageCurrent)], pageDrawObjects=\(parentController!.pageDrawObjects[parentController!.pageCurrent]) ,size=\(parentController!.pageDrawObjects[parentController!.pageCurrent]?.count), redoDrawObjects=\(parentController!.redoDrawObjects[parentController!.pageCurrent]?.count)")
+//    }
   }
   
   //Redo Function
   func redo(_ sender: UIImage) {
-    undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: image)
+    //undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: image)
     //drawingImage = sender
-    setCurrentImage(sender)
-    setTempImage(sender)
-    //print("Redo")
-    let parent = parentController!
-    let redoSize = (parent.redoDrawObjects[parent.pageCurrent]?.count)!
-    if( redoSize > 0){
-      let lastDrawObjects = parent.redoDrawObjects[parent.pageCurrent]?[redoSize-1]
-      parent.redoDrawObjects[parent.pageCurrent]?.removeLast()
-      parent.pageDrawObjects[parent.pageCurrent]?.append(lastDrawObjects!)
-      
-      print ("push pageDrawObjects[\(parent.pageCurrent)], size=\(parent.pageDrawObjects[parent.pageCurrent]?.count), redoDrawObjects=\(parent.redoDrawObjects[parent.pageCurrent]?.count)")
+    //setCurrentImage(sender)
+    //setTempImage(sender)
+    
+    /* local redo */
+    print("Redo")
+    if !self.redoStack.isEmpty {
+        print("before pop \(self.redoStack)")
+        self.prev=self.redoStack.popLast()
+        self.undoStack.append(self.image!)
+        print("after pop \(self.redoStack)")
+        setCurrentImage(self.prev)
+        
+        if((parentController!.redoDrawObjects[parentController!.pageCurrent]?.count)! > 0){
+            print("redoDrawObjects before pop \(parentController!.redoDrawObjects)")
+            let element = parentController!.redoDrawObjects[parentController!.pageCurrent]?.popLast()
+            parentController!.pageDrawObjects[parentController!.pageCurrent]?.append(element!)
+            print("redoDrawObjects after pop \(parentController!.redoDrawObjects)")
+        } else {
+            print("redoDrawObjects is empty")
+        }
     }
+    else {
+        print("redoStack is empty and do nothing")
+    }
+//    let parent = parentController!
+//    let redoSize = (parent.redoDrawObjects[parent.pageCurrent]?.count)!
+//    if( redoSize > 0){
+//      let lastDrawObjects = parent.redoDrawObjects[parent.pageCurrent]?[redoSize-1]
+//      parent.redoDrawObjects[parent.pageCurrent]?.removeLast()
+//      parent.pageDrawObjects[parent.pageCurrent]?.append(lastDrawObjects!)
+//
+//      print ("push pageDrawObjects[\(parent.pageCurrent)], size=\(parent.pageDrawObjects[parent.pageCurrent]?.count), redoDrawObjects=\(parent.redoDrawObjects[parent.pageCurrent]?.count)")
+//    }
   }
   func drawStart(){
     UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
@@ -278,7 +344,9 @@ class AssignmentRecordCanvas: UIImageView {
   
   func drawEnd(){
     DispatchQueue.main.sync { () -> Void in
+        //self.prev = self.image
       self.image = self.webTemp
+        self.prev = self.image
       self.webTemp = nil
     }
     UIGraphicsEndImageContext()
