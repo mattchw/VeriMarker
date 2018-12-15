@@ -113,7 +113,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   /* Schedueler */
   var scheduler = Scheduler(fileId: Constants.fileId, updateTimePeriod: Float(Constants.updateTimePeriod))
-  
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -588,11 +590,11 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     
     //Common Comments Button
     let commentBtn = UIButton(type: .custom)
-    let commentImg = UIImage(named: "chat")?.withRenderingMode(.alwaysTemplate)
+    let commentImg = UIImage(named: "sidebar")?.withRenderingMode(.alwaysTemplate)
     commentBtn.setImage(commentImg, for: .normal)
     commentBtn.tintColor = UIColor.white
     //commentBtn.frame = CGRect(x: 0, y: 0, width: btnWidth, height: btnHeight)
-    commentBtn.addTarget(self, action: #selector(commentBtnTapped), for: .touchUpInside)
+    commentBtn.addTarget(self, action: #selector(sidebarBtnTapped), for: .touchUpInside)
     let commentItem = UIBarButtonItem(customView: commentBtn)
     
     //Redo Button
@@ -1484,6 +1486,16 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Return to the previous view
     //performSegue(withIdentifier: "backToAssignmentRecord", sender: nil)
   }
+    
+    func sidebarBtnTapped(_ sender: UIButton){
+        self.view.addSubview(overviewOverlay!)
+        self.view.addSubview(panelOverviewOverlay!)
+        self.view.addSubview(overviewView!)
+        self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: -animateOffsetX, y: 0))
+        UIView.animate(withDuration: 0.5, animations: {
+            self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+        }, completion: nil)
+    }
   
   func commentBtnTapped(_ sender: UIButton){
     //Hide the original navBar
