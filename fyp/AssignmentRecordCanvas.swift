@@ -39,15 +39,27 @@ class AssignmentRecordCanvas: UIImageView {
     
   /* Draw Method */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-        if getImage() != nil {
-            self.undoStack.append(getImage()!)
-        } else {
-            // first time
-            self.undoStack.append(UIImage())
+        if((event?.allTouches?.count)==1){
+            if getImage() != nil {
+                self.undoStack.append(getImage()!)
+            } else {
+                // first time
+                self.undoStack.append(UIImage())
+            }
+            self.redoStack.removeAll()
         }
-        self.redoStack.removeAll()
+        else {
+            print("scaling...")
+        }
     }
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    if getImage() != nil {
+//        self.undoStack.append(getImage()!)
+//    } else {
+//        // first time
+//        self.undoStack.append(UIImage())
+//    }
+//    self.redoStack.removeAll()
     touch = touches.first!
     if touch == nil { return }
     UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
@@ -156,6 +168,15 @@ class AssignmentRecordCanvas: UIImageView {
     print ("AssignmentRecordCanvas#touchesEnded- positions size=\(self.saved.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parentController!.pageDrawObjects[pageId]?.count)]")
     //Add this annotation to the server
     //addAnnotation()
+    print ("undoStack: \(self.undoStack.count)")
+    print ("pageDrawObjects: \(parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)")
+    if (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count != self.undoStack.count) {
+        print("drop image")
+        let diff = self.undoStack.count - (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)!
+        for _ in 1...diff {
+            self.undoStack.popLast()
+        }
+    }
     saved = [CGPoint]()
   }
 
@@ -260,6 +281,13 @@ class AssignmentRecordCanvas: UIImageView {
     
     /* local undo */
     print("Undo")
+    if (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count != self.undoStack.count) {
+        print("drop image")
+        let diff = self.undoStack.count - (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)!
+        for _ in 1...diff {
+            self.undoStack.popLast()
+        }
+    }
     
     if !self.undoStack.isEmpty {
         print("before pop \(self.undoStack)")
@@ -304,6 +332,13 @@ class AssignmentRecordCanvas: UIImageView {
     //drawingImage = sender
     //setCurrentImage(sender)
     //setTempImage(sender)
+    if (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count != self.undoStack.count) {
+        print("drop image")
+        let diff = self.undoStack.count - (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)!
+        for _ in 1...diff {
+            self.undoStack.popLast()
+        }
+    }
     
     /* local redo */
     print("Redo")
