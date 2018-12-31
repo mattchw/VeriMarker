@@ -433,7 +433,6 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
         DispatchQueue.main.async(){
             print(filepath)
             self.filePath = filepath + "/test.pdf"
-            print(self.filePath)
             // Create an NSURL object based on the file path.
             let url = NSURL.fileURL(withPath: self.filePath!)
             self.PDFDocument = CGPDFDocument(url as CFURL)
