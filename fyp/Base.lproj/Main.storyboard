@@ -776,10 +776,10 @@
             </objects>
             <point key="canvasLocation" x="6517.96875" y="-385.21229868228403"/>
         </scene>
-        <!--Course-->
+        <!--Marking-->
         <scene sceneID="PhC-YR-fHg">
             <objects>
-                <navigationController title="Course" automaticallyAdjustsScrollViewInsets="NO" id="U8z-ID-mjh" sceneMemberID="viewController">
+                <navigationController title="Marking" automaticallyAdjustsScrollViewInsets="NO" id="U8z-ID-mjh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Marking" image="marking" id="c5K-Wa-fJv"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0Om-HL-VoS">
@@ -847,7 +847,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="hXy-gp-3Ce"/>
-        <segue reference="x0k-ZG-yOp"/>
+        <segue reference="O0F-Pa-Zfx"/>
         <segue reference="O9V-FU-0Mq"/>
         <segue reference="dsh-Us-DUH"/>
     </inferredMetricsTieBreakers>

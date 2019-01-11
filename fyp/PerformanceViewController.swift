@@ -13,13 +13,35 @@ class PerformanceViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var sections = [
-        section(sectionClass: "Assignment 1", name: ["Ben","John"], expanded: false),
-        section(sectionClass: "Assignment 2", name: ["Ben","John","Tom"], expanded: false),
-        section(sectionClass: "Assignment 3", name: ["Ben","John","Tom"], expanded: false)
+        section(
+            sectionClass: "Assignment 1",
+            student: [
+                Student(name: "Ben",score: 30)!
+            ],
+            expanded: false
+        ),
+        section(
+            sectionClass: "Assignment 2",
+            student: [
+                Student(name: "Ben",score: 30)!
+            ],
+            expanded: false
+        ),
+        section(
+            sectionClass: "Assignment 3",
+            student: [
+                Student(name: "Ben",score: 30)!
+            ],
+            expanded: false
+        )
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // navigation bar init
+        navigationController?.navigationBar.barTintColor = Theme.navigationBarTintColor
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.navigationBarTextColor, NSFontAttributeName: UIFont.init(name: "AppleSDGothicNeo-Regular", size: 25)!]
 
         // Do any additional setup after loading the view.
     }
@@ -38,7 +60,7 @@ extension PerformanceViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].name.count
+        return sections[section].student.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -73,7 +95,8 @@ extension PerformanceViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // every row
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = sections[indexPath.section].name[indexPath.row]
+        cell.textLabel?.text = sections[indexPath.section].student[indexPath.row].name
+        cell.detailTextLabel?.text = String(sections[indexPath.section].student[indexPath.row].score)
         return cell
     }
 
@@ -84,7 +107,7 @@ extension PerformanceViewController: expandableHeaderViewDelegate {
         sections[section].expanded = !(sections[section].expanded)
         
         tableView.beginUpdates()
-        for i in 0 ..< sections[section].name.count {
+        for i in 0 ..< sections[section].student.count {
             tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .automatic)
         }
         tableView.endUpdates()
