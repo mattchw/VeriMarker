@@ -19,6 +19,16 @@ class CourseViewController: UIViewController,
   var userId = "king"
   var coursesSections = [String]()
   var courses = [[Course]]()
+    
+    var sections = [
+        section(
+            sectionClass: "Assignment 2",
+            student: [
+                Student(name: "Ben", score: 30)!
+            ],
+            expanded: false
+        )
+    ]
 
   var width:CGFloat = 0
 

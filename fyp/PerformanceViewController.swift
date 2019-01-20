@@ -14,23 +14,8 @@ class PerformanceViewController: UIViewController {
     
     var sections = [
         section(
-            sectionClass: "Assignment 1",
+            sectionClass: "No Performance data",
             student: [
-                Student(name: "Ben",score: 30)!
-            ],
-            expanded: false
-        ),
-        section(
-            sectionClass: "Assignment 2",
-            student: [
-                Student(name: "Ben",score: 30)!
-            ],
-            expanded: false
-        ),
-        section(
-            sectionClass: "Assignment 3",
-            student: [
-                Student(name: "Ben",score: 30)!
             ],
             expanded: false
         )
@@ -44,11 +29,63 @@ class PerformanceViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.navigationBarTextColor, NSFontAttributeName: UIFont.init(name: "AppleSDGothicNeo-Regular", size: 25)!]
 
         // Do any additional setup after loading the view.
+        getPerformance()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func getPerformance() {
+        print("getPerformance# start")
+        let connectorType = ConnectorType.Veriguide
+        print("getPerformance# connectorType=\(connectorType)")
+        let api = AppAPI(connectorType: connectorType)
+        if(api == nil){
+            print ("Fail to load api")
+        }
+        api!.getPerformance(courseCode: "2016R1-NURS1151-"){
+            (performanceAssignments, error) in
+            if (error != nil){
+                //handle error here
+                return
+            }
+            print(performanceAssignments)
+            for assignment in performanceAssignments!.arrayValue {
+                let asgn_num = assignment["asgn_num"]
+                let mean = assignment["mean"]
+                let students = assignment["students"]
+                print(asgn_num.stringValue)
+                print(mean)
+                print(students)
+                var tmpStudents: [Student]! = []
+                for student in students.arrayValue {
+                    let ref_id = student["ref_id"].stringValue
+                    let score = student["score"].doubleValue
+                    print(ref_id)
+                    print(score)
+                    var aStudent = Student(name: ref_id, score: score)
+                    tmpStudents.append(Student(name: ref_id, score: score)!)
+                    //tmpStudent.append(Student(name: ref_id, score: Double(score!))!)
+                }
+                var tmp = section(
+                    sectionClass: "Assignment "+asgn_num.stringValue,
+                    student: tmpStudents,
+                    expanded: false
+                )
+                if (self.sections.count == 1){
+                    if (self.sections[0].sectionClass == "No Performance data"){
+                        self.sections.popLast()
+                    }
+                }
+                self.sections.append(tmp)
+            }
+            DispatchQueue.main.async(){
+                //code
+                self.tableView.reloadData()
+            }
+        }
     }
 
 }
