@@ -417,6 +417,20 @@ class AppAPI {
       completion(drawObjects, nil)
     }
   }
+    func getPerformance(courseCode: String, completion: @escaping (JSON?, ConnectionError?)->()){
+        var urlWithParam = PDFAnnotationAPI
+        urlWithParam += "Performance?courseCode=" + courseCode
+        print(urlWithParam)
+        self.connector.sendGetRequest(urlString: urlWithParam) {
+            (data, error) in
+            print ("data = \(data)")
+            if data == nil {
+                return
+            }
+            let json = try! JSON(data: data!)
+            completion(json, error)
+        }
+    }
   
     func readLastModifiedTime(fileId: String) -> Date?{
         let fileName = self.fileNamePrefix + "-file-" + fileId + "-last-modified-time"

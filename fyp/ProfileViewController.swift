@@ -21,6 +21,11 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // navigation bar init
+        navigationController?.navigationBar.barTintColor = Theme.navigationBarTintColor
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.navigationBarTextColor, NSFontAttributeName: UIFont.init(name: "AppleSDGothicNeo-Regular", size: 25)!]
+        
         self.userName.text = HomePageViewController.user?.fullName
         self.userCID.text = HomePageViewController.user?.computingId
         self.userUID.text = HomePageViewController.user?.universityId
