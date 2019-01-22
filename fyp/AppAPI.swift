@@ -41,7 +41,6 @@ class AppAPI {
     }
     
     func getUserInfo(completion: @escaping (User?, ConnectionError?)->()){
-        print("hello")
         // let urlString = "https://api.veriguide.org:8083/vg-api/v1/user/"
         let urlString = veriguideAPI+"user/"
         let urlWithParam = urlString + "?client_id=" + OAuth2Helper.oauth2.clientId!

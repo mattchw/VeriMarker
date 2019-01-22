@@ -52,12 +52,14 @@ class User: NSObject {
     var universityId: String
     var departmentName: String
     var mail: String
+    var type: String
     
-    init?(fullName: String, computingId: String, universityId: String, departmentName: String, mail: String){
+    init?(fullName: String, computingId: String, universityId: String, departmentName: String, mail: String, type: String){
         self.fullName = fullName
         self.computingId = computingId
         self.universityId = universityId
         self.departmentName = departmentName
         self.mail = mail
+        self.type = type
     }
 }
