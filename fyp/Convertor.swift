@@ -306,7 +306,7 @@ class Convertor {
         return courses
     }
     
-    static func jsonToAssignmentList(json: JSON) -> [Assignment] {
+    static func jsonToAssignmentList(json: JSON, user: String) -> [Assignment] {
         var assignments = [Assignment]()
         print(json)
         for (index,subJson):(String, JSON) in json {
@@ -322,11 +322,19 @@ class Convertor {
             let enrollNum = subJson["numOfEnrolledStudents"].int!
             
             let image =  UIImage(named: "folder")!
-            // print
-            //      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),startYear=\(startYear),endYear=\(endYear),code=\(code),enrolNum=\(enrollmentNumber),instructor=\(instructor)")
-            // let name = "Assignment"
-            // print (name)
+            
             var new_asg = Assignment(asgnNum: asgnNum, submitNum: submittedNum!, enrollNum: enrollNum, lastSubmitTime: submitTime!, image: image)!
+            
+            var found = false
+            for enrolledStudent in subJson["enrolledStudents"].arrayValue {
+                if(enrolledStudent.stringValue==user){
+                    found = true
+                    break
+                }
+            }
+            if(!found){
+                new_asg.authorized = true
+            }
             assignments += [new_asg]
             print ("asgnNum=\(new_asg.asgnNum),submitNum=\(new_asg.submitNum),enrollNum=\(new_asg.enrollNum),lastSubmitTime=\(new_asg.lastSubmitTime)")
         }

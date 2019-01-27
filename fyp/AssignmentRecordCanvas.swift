@@ -60,61 +60,65 @@ class AssignmentRecordCanvas: UIImageView {
 //        self.undoStack.append(UIImage())
 //    }
 //    self.redoStack.removeAll()
-    touch = touches.first!
-    if touch == nil { return }
-    UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
-    context = UIGraphicsGetCurrentContext()
-    image?.draw(in: bounds)
-    
-    aTouches = [UITouch]()
-    coalesedTouches = (event?.coalescedTouches(for: touch!))!
-    if coalesedTouches.count > 0{
-      aTouches = coalesedTouches
-    } else {
-      aTouches.append(touch!)
+    if (parentController?.assignment?.authorized)!{
+        touch = touches.first!
+        if touch == nil { return }
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+        context = UIGraphicsGetCurrentContext()
+        
+        image?.draw(in: bounds)
+        
+        aTouches = [UITouch]()
+        coalesedTouches = (event?.coalescedTouches(for: touch!))!
+        if coalesedTouches.count > 0{
+            aTouches = coalesedTouches
+        } else {
+            aTouches.append(touch!)
+        }
+        
+        //Draw according to different mode in PDF page at pageCurrent
+        
+        switch parentController!.penMode {
+        case "pen":
+            size = parentController!.penSize
+            color = parentController!.penColor
+            break
+        case "pencil":
+            size = parentController!.pencilSize
+            color = parentController!.pencilTexture
+            break
+        case "eraser":
+            size = parentController!.eraserSize
+            color = UIColor.clear
+            break
+        case "highlight":
+            size = parentController!.highlightSize
+            color = parentController!.highlightColor
+            break
+        default:
+            size = parentController!.penSize
+            color = parentController!.penColor
+            break
+        }
+        
+        for touch in aTouches {
+            drawStroke(context, touch: touch, penMode: parentController!.penMode, color: color, size: size!)
+        }
+        
+        /*
+         drawingImage = UIGraphicsGetImageFromCurrentImageContext()
+         
+         if let predictedTouches = event?.predictedTouches(for: touch) {
+         for touch in predictedTouches {
+         drawStroke(context, touch: touch)
+         }
+         }
+         */
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
     }
     
-    //Draw according to different mode in PDF page at pageCurrent
-    
-    switch parentController!.penMode {
-    case "pen":
-      size = parentController!.penSize
-      color = parentController!.penColor
-      break
-    case "pencil":
-      size = parentController!.pencilSize
-      color = parentController!.pencilTexture
-      break
-    case "eraser":
-      size = parentController!.eraserSize
-      color = UIColor.clear
-      break
-    case "highlight":
-      size = parentController!.highlightSize
-      color = parentController!.highlightColor
-      break
-    default:
-      size = parentController!.penSize
-      color = parentController!.penColor
-      break
-    }
-    
-    for touch in aTouches {
-      drawStroke(context, touch: touch, penMode: parentController!.penMode, color: color, size: size!)
-    }
-    
-    /*
-     drawingImage = UIGraphicsGetImageFromCurrentImageContext()
-     
-     if let predictedTouches = event?.predictedTouches(for: touch) {
-     for touch in predictedTouches {
-     drawStroke(context, touch: touch)
-     }
-     }
-     */
-    image = UIGraphicsGetImageFromCurrentImageContext()
-    
-    UIGraphicsEndImageContext()
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -125,59 +129,62 @@ class AssignmentRecordCanvas: UIImageView {
     
 //    let positions = self.saved
 //    let smoothPositions = self.saved
-    let pageId = parentController!.pageCurrent
-    
-    //Document Related Attributes
-    let userID = 0
-    let assignmentRecordID = 0
-    let assignmentID = 0
-    
-    switch parentController!.penMode {
-    case "pen":
-      size = parentController!.penSize
-      color = parentController!.penColor
-      break
-    case "pencil":
-      size = parentController!.pencilSize
-      color = UIColor.lightGray
-      break
-    case "eraser":
-      size = parentController!.eraserSize
-      color = UIColor.clear
-      break
-    case "highlight":
-      size = parentController!.highlightSize
-      color = parentController!.highlightColor
-      break
-    default:
-      size = parentController!.penSize
-      color = parentController!.penColor
-      break
-    }
-    
-    //Push Undo History
-    //undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
-    
-    //Save the last Image
-    //setTempImage(image)
-    
-    let linePath = LinePath(positions: self.saved, smoothPositions: self.saved, color:color!, lineWidth: size!, category: "pen", pageID: pageId,
-                            userID: userID, assignmentRecordID: assignmentRecordID, assignmentID: assignmentID, refId: Utilities.getReferenceId())
-    parentController!.pageDrawObjects[pageId]?.append(linePath!)
-    parentController!.redoDrawObjects[pageId]?.removeAll()
-    print ("AssignmentRecordCanvas#touchesEnded- positions size=\(self.saved.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parentController!.pageDrawObjects[pageId]?.count)]")
-    //Add this annotation to the server
-    //addAnnotation()
-    print ("undoStack: \(self.undoStack.count)")
-    print ("pageDrawObjects: \(parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)")
-    if (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count != self.undoStack.count) {
-        print("drop image")
-        let diff = self.undoStack.count - (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)!
-        for _ in 1...diff {
-            self.undoStack.popLast()
+    if (parentController?.assignment?.authorized)!{
+        let pageId = parentController!.pageCurrent
+        
+        //Document Related Attributes
+        let userID = 0
+        let assignmentRecordID = 0
+        let assignmentID = 0
+        
+        switch parentController!.penMode {
+        case "pen":
+            size = parentController!.penSize
+            color = parentController!.penColor
+            break
+        case "pencil":
+            size = parentController!.pencilSize
+            color = UIColor.lightGray
+            break
+        case "eraser":
+            size = parentController!.eraserSize
+            color = UIColor.clear
+            break
+        case "highlight":
+            size = parentController!.highlightSize
+            color = parentController!.highlightColor
+            break
+        default:
+            size = parentController!.penSize
+            color = parentController!.penColor
+            break
         }
+        
+        //Push Undo History
+        //undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
+        
+        //Save the last Image
+        //setTempImage(image)
+        
+        let linePath = LinePath(positions: self.saved, smoothPositions: self.saved, color:color!, lineWidth: size!, category: "pen", pageID: pageId,
+                                userID: userID, assignmentRecordID: assignmentRecordID, assignmentID: assignmentID, refId: Utilities.getReferenceId())
+        parentController!.pageDrawObjects[pageId]?.append(linePath!)
+        parentController!.redoDrawObjects[pageId]?.removeAll()
+        print ("AssignmentRecordCanvas#touchesEnded- positions size=\(self.saved.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parentController!.pageDrawObjects[pageId]?.count)]")
+        //Add this annotation to the server
+        //addAnnotation()
+        print ("undoStack: \(self.undoStack.count)")
+        print ("pageDrawObjects: \(parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)")
+        if (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count != self.undoStack.count) {
+            print("drop image")
+            let diff = self.undoStack.count - (parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)!
+            for _ in 1...diff {
+                self.undoStack.popLast()
+            }
+        }
+        saved = [CGPoint]()
     }
-    saved = [CGPoint]()
+    
   }
 
   
