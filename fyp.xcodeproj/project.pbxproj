@@ -183,6 +183,7 @@
 		DC8D8C7021D9DA0300D07A5D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DCB3B07021E74AEE00C6FF87 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		DCC30A4C21983B2B0076E1A1 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		DCED0E5D21F72CA0004FF649 /* fyp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = fyp.entitlements; sourceTree = "<group>"; };
 		DCF95EAC21E583D7002ED6F5 /* PerformanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceViewController.swift; sourceTree = "<group>"; };
 		DCF95EAF21E58AB6002ED6F5 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		DCF95EB421E58B32002ED6F5 /* expandableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = expandableHeaderView.swift; sourceTree = "<group>"; };
@@ -409,6 +410,7 @@
 		CD37DEF61DA3C697009B69FC /* fyp */ = {
 			isa = PBXGroup;
 			children = (
+				DCED0E5D21F72CA0004FF649 /* fyp.entitlements */,
 				E010272C1DE79AF500E2F2A9 /* Constants */,
 				CD24252A1DDB0652006D5F17 /* static */,
 				CD2425251DDB0592006D5F17 /* Utilities */,
@@ -613,6 +615,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 9VUX37J29A;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					CD37DF071DA3C698009B69FC = {
 						CreatedOnToolsVersion = 8.0;

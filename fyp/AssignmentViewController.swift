@@ -83,7 +83,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
         }
         print(course!.code)
-        api!.getAssignmentList(courseCode: course!.code){
+        print(HomePageViewController.user?.computingId)
+        api!.getAssignmentList(courseCode: course!.code, user: (HomePageViewController.user?.computingId)!){
             (assignmentL, error) in
             if (error != nil){
                 //handle error here

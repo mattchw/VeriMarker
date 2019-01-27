@@ -27,6 +27,12 @@ UITableViewDelegate, UITableViewDataSource {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    if (assignment?.authorized)! {
+        print("This is an authorized assignment and you are able to mark it")
+    }
+    else {
+        print("You don't have the right to mark this assignment")
+    }
 
     let nib = UINib(nibName: "AssignmentRecordTableViewHeaderView", bundle: nil)
     self.assignmentRecordTableView.register(nib, forHeaderFooterViewReuseIdentifier: "AssignmentRecordTableViewHeaderView")
@@ -253,7 +259,17 @@ UITableViewDelegate, UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let sender = assignmentRecordTableView.cellForRow(at: indexPath)
-    performSegue(withIdentifier: "ShowAssignmentRecordURL", sender: sender)
+    let selectedAssignmentRecord = assignmentRecords[indexPath.row]
+    if(selectedAssignmentRecord.lastUpdateTime == nil && !(assignment?.authorized)!){
+        print("it is not yet graded")
+        let alert = UIAlertController(title: "It is not graded", message: "Please check it later", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    else {
+        print("it is graded")
+        performSegue(withIdentifier: "ShowAssignmentRecordURL", sender: sender)
+    }
   }
 
   /************************************ Table View Related ***********************************/

@@ -41,17 +41,17 @@ class Course: NSObject {
 
 class Course: NSObject {
     var year: Int
-    var term: Int
+    var term: Int = 0
     var subject: String
     var catalog: String
     var section: String
     var title: String
     var code: String
     var enrollment: Int
-    var teacher: String
+    var teacher: String = ""
     var image: UIImage?
     
-    init?(year: Int, term: Int, subject: String, catalog: String, section: String, title: String, code: String, enrollment: Int, teacher: String, image: UIImage?){
+    init?(year: Int, term: Int = 0, subject: String, catalog: String, section: String, title: String, code: String, enrollment: Int, teacher: String, image: UIImage?){
         self.year = year
         self.term = term
         self.subject = subject

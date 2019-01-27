@@ -41,7 +41,6 @@ class AppAPI {
     }
     
     func getUserInfo(completion: @escaping (User?, ConnectionError?)->()){
-        print("hello")
         // let urlString = "https://api.veriguide.org:8083/vg-api/v1/user/"
         let urlString = veriguideAPI+"user/"
         let urlWithParam = urlString + "?client_id=" + OAuth2Helper.oauth2.clientId!
@@ -165,7 +164,7 @@ class AppAPI {
      * 3. parse the responseString to JSON
      * 4. convert the JSON into an array of Course Object
      */
-    func getAssignmentList(courseCode: String, completion: @escaping ([Assignment]?, ConnectionError?)->()) {
+    func getAssignmentList(courseCode: String,user:String, completion: @escaping ([Assignment]?, ConnectionError?)->()) {
         let token = OAuth2Helper.oauth2.accessToken
         let urlWithParam: String
         switch self.connectorType {
@@ -201,7 +200,7 @@ class AppAPI {
             //   print ("Fail to write back the file")
             //}
             // convert the JSON into an array of Assignment Object
-            let assignments = Convertor.jsonToAssignmentList(json: json)
+            let assignments = Convertor.jsonToAssignmentList(json: json, user: user)
             //print(assignments[0].id)
             completion(assignments, nil)
         }

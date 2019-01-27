@@ -267,10 +267,18 @@ class Convertor {
         let universityId = json["universityId"].stringValue
         let departmentName = json["departmentName"].stringValue
         let mail = json["mail"].stringValue
+        var type = "Student"
         
-        print ("fullName=\(fullName), computingId=\(computingId), universityId=\(universityId), departmentName=\(departmentName), mail=\(mail)")
+        if (computingId.prefix(1)=="s") {
+            print("this is a student")
+        } else {
+            print("this is a teacher")
+            type = "Teacher"
+        }
         
-        user = User(fullName: fullName, computingId: computingId, universityId: universityId, departmentName: departmentName, mail: mail)!
+        print ("fullName=\(fullName), computingId=\(computingId), universityId=\(universityId), departmentName=\(departmentName), mail=\(mail), type=\(type)")
+        
+        user = User(fullName: fullName, computingId: computingId, universityId: universityId, departmentName: departmentName, mail: mail, type: type)!
         
         return user
     }
@@ -280,14 +288,14 @@ class Convertor {
         for (index,subJson):(String, JSON) in json {
             let date = subJson["acad_year"].string!
             let year = Int(date.prefix(4))!
-            let term = Int(subJson["term"].string!)!
+            let term = Int(subJson["term"].string ?? "0")!
             let subject = subJson["subject_area"].string!
             let catalog = subJson["catalog_number"].string!
             let section = subJson["section_code"].string!
             let title = subJson["course_title"].string!
-            let code = subJson["courseCode"].string!
+            let code = subJson["courseCode"].string ?? (subJson["acad_year"].string!+"R1-"+subJson["subject_area"].string!+subJson["catalog_number"].string!+subJson["section_code"].string!)
             let enrollment = subJson["enrollmentCount"].int!
-            let teacher = subJson["teacher"].string!
+            let teacher = subJson["teacher"].string ?? ""
             let image =  UIImage(named: "folder")!
             
             print("year=\(year), term=\(term), subject=\(subject), catalog=\(catalog), section=\(section), title=\(title), code=\(code), enrollment=\(enrollment)")
@@ -298,7 +306,7 @@ class Convertor {
         return courses
     }
     
-    static func jsonToAssignmentList(json: JSON) -> [Assignment] {
+    static func jsonToAssignmentList(json: JSON, user: String) -> [Assignment] {
         var assignments = [Assignment]()
         print(json)
         for (index,subJson):(String, JSON) in json {
@@ -314,11 +322,19 @@ class Convertor {
             let enrollNum = subJson["numOfEnrolledStudents"].int!
             
             let image =  UIImage(named: "folder")!
-            // print
-            //      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),startYear=\(startYear),endYear=\(endYear),code=\(code),enrolNum=\(enrollmentNumber),instructor=\(instructor)")
-            // let name = "Assignment"
-            // print (name)
+            
             var new_asg = Assignment(asgnNum: asgnNum, submitNum: submittedNum!, enrollNum: enrollNum, lastSubmitTime: submitTime!, image: image)!
+            
+            var found = false
+            for enrolledStudent in subJson["enrolledStudents"].arrayValue {
+                if(enrolledStudent.stringValue==user){
+                    found = true
+                    break
+                }
+            }
+            if(!found){
+                new_asg.authorized = true
+            }
             assignments += [new_asg]
             print ("asgnNum=\(new_asg.asgnNum),submitNum=\(new_asg.submitNum),enrollNum=\(new_asg.enrollNum),lastSubmitTime=\(new_asg.lastSubmitTime)")
         }

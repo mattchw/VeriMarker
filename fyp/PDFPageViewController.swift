@@ -118,6 +118,12 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     }
   override func viewDidLoad() {
     super.viewDidLoad()
+    let authorized = assignment?.authorized
+    if (authorized)! {
+        print("authorized")
+    } else {
+        print("not authorized")
+    }
     
     // Do any additional setup after loading the view.
     
@@ -134,11 +140,11 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     nextSwipe.delaysTouchesBegan = false
     self.view.addGestureRecognizer(nextSwipe)*/
     
-    let leftEdgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(showPagesOverview))
-    leftEdgePan.minimumNumberOfTouches = 2
-    leftEdgePan.maximumNumberOfTouches = 2
-    leftEdgePan.edges = .left
-    self.view.addGestureRecognizer(leftEdgePan)
+//    let leftEdgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(showPagesOverview))
+//    leftEdgePan.minimumNumberOfTouches = 2
+//    leftEdgePan.maximumNumberOfTouches = 2
+//    leftEdgePan.edges = .left
+//    self.view.addGestureRecognizer(leftEdgePan)
     
     //Init layout value
     let percentage:CGFloat = 0.92;
@@ -154,7 +160,21 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     tabBarController?.tabBar.isHidden = true;
     
     //Disable navigation controller
-    navigationController?.isNavigationBarHidden = true;
+    if (authorized)!{
+        navigationController?.isNavigationBarHidden = true;
+    } else {
+        let menuBtn = UIButton(type: .custom)
+        menuBtn.frame = CGRect(x: 0.0, y: 0.0, width: 30, height: 30)
+        menuBtn.setImage(UIImage(named:"sidebar")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        menuBtn.addTarget(self, action: #selector(sidebarBtnTapped), for: .touchUpInside)
+        menuBtn.tintColor = UIColor.white
+        
+        let menuBarItem = UIBarButtonItem(customView: menuBtn)
+        
+        menuBarItem.customView?.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        menuBarItem.customView?.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        self.navigationItem.rightBarButtonItem = menuBarItem
+    }
     
     scheduler = Scheduler(fileId: String(describing:self.assignmentRecord!.refId), updateTimePeriod: Float(Constants.updateTimePeriod))
     
@@ -178,13 +198,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     loadPencilOptionPanel()
     
     //load control panel here, pen tools panel
-    loadControlPanel()
+    loadControlPanel(auth: authorized!)
     
     //load control panel for comment!
     loadCommentControlPanel()
     
     //load the page overview btn here
-    loadPageOverviewBtn()
+    //loadPageOverviewBtn()
     
     //load the page overview view here (Not Visible)
     loadPageOverviewView()
@@ -667,7 +687,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     
   }
   
-  func loadControlPanel() {
+    func loadControlPanel(auth: Bool) {
     //Init panel view
     let left:CGFloat = 0.0
     let top:CGFloat = height
@@ -828,7 +848,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     panelView?.addSubview(currentHighlightColorLabel!)
     // panelView?.addSubview(currentPencilColorLabel!)
     
-    view.addSubview(panelView!)
+        if (auth){
+            view.addSubview(panelView!)
+        }
     
     //Animate the button
     //Only the first time

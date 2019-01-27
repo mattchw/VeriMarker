@@ -53,6 +53,7 @@ class Assignment: NSObject {
   var submitNum: Int
   var enrollNum: Int
   var lastSubmitTime: String
+  var authorized: Bool = false
   
   init?(asgnNum: Int, submitNum: Int, enrollNum: Int, lastSubmitTime: String, image: UIImage?){
     self.asgnNum = asgnNum
