@@ -26,7 +26,10 @@ class PerformanceViewController: UIViewController {
         
         // navigation bar init
         navigationController?.navigationBar.barTintColor = Theme.navigationBarTintColor
+        navigationController?.navigationBar.tintColor = Theme.navigationBarTextColor
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.navigationBarTextColor, NSFontAttributeName: UIFont.init(name: "AppleSDGothicNeo-Regular", size: 25)!]
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Overall", style: .done, target: self, action: #selector(overallTapped))
 
         // Do any additional setup after loading the view.
         getPerformance()
@@ -35,6 +38,10 @@ class PerformanceViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func overallTapped(sender: AnyObject) {
+        //print("hi")
+        performSegue(withIdentifier: "showOverallPerformance", sender: sender)
     }
     
     func getPerformance() {
@@ -91,6 +98,11 @@ class PerformanceViewController: UIViewController {
 }
 
 extension PerformanceViewController: UITableViewDelegate, UITableViewDataSource {
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let sender = tableView.cellForRow(at: indexPath)
+//        performSegue(withIdentifier: "showOverallPerformance", sender: sender)
+//    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
