@@ -41,15 +41,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
   }
 
-  func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        if "vgmark" == url.scheme || (url.scheme?.hasPrefix("cse.hwtsang5.TestOAuth2"))! {
+//  func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        if "vgmark" == url.scheme || (url.scheme?.hasPrefix("cse.hwtsang5.TestOAuth2"))! {
+//            if let vc = window?.rootViewController as? HomePageViewController {
+//                OAuth2Helper.oauth2.handleRedirectURL(url)
+//                print("Authorized! Access token is in \(OAuth2Helper.oauth2.accessToken)")
+//                return true
+//            }
+//        }
+//        return false
+//  }
+    func application(_ app: UIApplication, open inputURL: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if "vgmark" == inputURL.scheme || (inputURL.scheme?.hasPrefix("cse.hwtsang5.TestOAuth2"))! {
             if let vc = window?.rootViewController as? HomePageViewController {
-                OAuth2Helper.oauth2.handleRedirectURL(url)
+                OAuth2Helper.oauth2.handleRedirectURL(inputURL)
                 print("Authorized! Access token is in \(OAuth2Helper.oauth2.accessToken)")
                 return true
             }
         }
         return false
-  }
+    }
 }
 

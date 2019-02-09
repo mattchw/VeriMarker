@@ -49,6 +49,11 @@
 		CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */; };
 		CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22551DAE2D490025D33E /* roundUIButton.swift */; };
 		CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */; };
+		DC050FBE21FEB1520033711A /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC050FBD21FEB1520033711A /* UploadViewController.swift */; };
+		DC050FC221FECA5F0033711A /* PerformanceCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC050FC121FECA5F0033711A /* PerformanceCourseViewController.swift */; };
+		DC397478220049AB001DB2E9 /* PerformanceOverallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC397477220049AB001DB2E9 /* PerformanceOverallViewController.swift */; };
+		DC39749222004DEA001DB2E9 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC39748D22004DE2001DB2E9 /* Charts.framework */; };
+		DC39749322004DEA001DB2E9 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC39748D22004DE2001DB2E9 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DC8D8C7121D9DA0300D07A5D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8D8C7021D9DA0300D07A5D /* ProfileViewController.swift */; };
 		DCB3B07121E74AEE00C6FF87 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB3B07021E74AEE00C6FF87 /* Student.swift */; };
 		DCC30A4D21983B2C0076E1A1 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC30A4C21983B2B0076E1A1 /* Device.swift */; };
@@ -118,6 +123,34 @@
 			remoteGlobalIDString = CD37DEF31DA3C697009B69FC;
 			remoteInfo = fyp;
 		};
+		DC39748C22004DE2001DB2E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC39748622004DE2001DB2E9 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06165F241D8110E600722320;
+			remoteInfo = Charts;
+		};
+		DC39748E22004DE2001DB2E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC39748622004DE2001DB2E9 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06B120D51D811E6200D14B02;
+			remoteInfo = ChartsRealm;
+		};
+		DC39749022004DE2001DB2E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC39748622004DE2001DB2E9 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06165F2E1D8110E600722320;
+			remoteInfo = ChartsTests;
+		};
+		DC39749422004DEA001DB2E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC39748622004DE2001DB2E9 /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 06165F231D8110E600722320;
+			remoteInfo = Charts;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -128,6 +161,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				CB71E8061FC7AEF1001B51F5 /* OAuth2.framework in Embed Frameworks */,
+				DC39749322004DEA001DB2E9 /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,6 +214,10 @@
 		CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navigationDelegate.swift; sourceTree = "<group>"; };
 		CDBC22551DAE2D490025D33E /* roundUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundUIButton.swift; sourceTree = "<group>"; };
 		CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bottomBorderUITextField.swift; sourceTree = "<group>"; };
+		DC050FBD21FEB1520033711A /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		DC050FC121FECA5F0033711A /* PerformanceCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceCourseViewController.swift; sourceTree = "<group>"; };
+		DC397477220049AB001DB2E9 /* PerformanceOverallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceOverallViewController.swift; sourceTree = "<group>"; };
+		DC39748622004DE2001DB2E9 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = fyp/Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 		DC8D8C7021D9DA0300D07A5D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DCB3B07021E74AEE00C6FF87 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		DCC30A4C21983B2B0076E1A1 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -212,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E02856AB1DE57F0000D85AA8 /* libsqlite3.0.tbd in Frameworks */,
+				DC39749222004DEA001DB2E9 /* Charts.framework in Frameworks */,
 				CB71E8051FC7AEF1001B51F5 /* OAuth2.framework in Frameworks */,
 				E02856AC1DE57F0000D85AA8 /* libsqlite3.tbd in Frameworks */,
 			);
@@ -388,6 +427,7 @@
 		CD37DEEB1DA3C697009B69FC = {
 			isa = PBXGroup;
 			children = (
+				DC39748622004DE2001DB2E9 /* Charts.xcodeproj */,
 				CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */,
 				E010272F1DE7AE0E00E2F2A9 /* Assets.xcassets */,
 				CD37DEF61DA3C697009B69FC /* fyp */,
@@ -419,6 +459,7 @@
 				DCCD429A21E582F0001048BE /* PerformanceModule */,
 				CD2425211DDB0491006D5F17 /* NavigationModule */,
 				CD2425161DDB0307006D5F17 /* OnlineGradingModule */,
+				DC050FBA21FEA5780033711A /* UploadModule */,
 				CD37DEF71DA3C697009B69FC /* AppDelegate.swift */,
 				CD37DEFB1DA3C697009B69FC /* Main.storyboard */,
 				CD37DF001DA3C698009B69FC /* LaunchScreen.storyboard */,
@@ -455,6 +496,24 @@
 				CD69E03C1DE6065D0029B168 /* CourseTableViewHeaderView.xib */,
 			);
 			name = nib;
+			sourceTree = "<group>";
+		};
+		DC050FBA21FEA5780033711A /* UploadModule */ = {
+			isa = PBXGroup;
+			children = (
+				DC050FBD21FEB1520033711A /* UploadViewController.swift */,
+			);
+			name = UploadModule;
+			sourceTree = "<group>";
+		};
+		DC39748722004DE2001DB2E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC39748D22004DE2001DB2E9 /* Charts.framework */,
+				DC39748F22004DE2001DB2E9 /* ChartsRealm.framework */,
+				DC39749122004DE2001DB2E9 /* ChartsTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		DC8D8C6C21D9D5D600D07A5D /* ProfileModule */ = {
@@ -503,6 +562,8 @@
 			isa = PBXGroup;
 			children = (
 				DCF95EAC21E583D7002ED6F5 /* PerformanceViewController.swift */,
+				DC050FC121FECA5F0033711A /* PerformanceCourseViewController.swift */,
+				DC397477220049AB001DB2E9 /* PerformanceOverallViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -577,6 +638,7 @@
 			);
 			dependencies = (
 				CB71E8081FC7AEF1001B51F5 /* PBXTargetDependency */,
+				DC39749522004DEA001DB2E9 /* PBXTargetDependency */,
 			);
 			name = fyp;
 			productName = fyp;
@@ -641,6 +703,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = DC39748722004DE2001DB2E9 /* Products */;
+					ProjectRef = DC39748622004DE2001DB2E9 /* Charts.xcodeproj */;
+				},
+				{
 					ProductGroup = CB71E7F71FC7AEE8001B51F5 /* Products */;
 					ProjectRef = CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */;
 				},
@@ -682,6 +748,27 @@
 			remoteRef = CB71E8031FC7AEE9001B51F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		DC39748D22004DE2001DB2E9 /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = DC39748C22004DE2001DB2E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DC39748F22004DE2001DB2E9 /* ChartsRealm.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ChartsRealm.framework;
+			remoteRef = DC39748E22004DE2001DB2E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DC39749122004DE2001DB2E9 /* ChartsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChartsTests.xctest;
+			remoteRef = DC39749022004DE2001DB2E9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -715,6 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCC7F90D215A36C600FFB159 /* AppDelegate.swift in Sources */,
+				DC050FBE21FEB1520033711A /* UploadViewController.swift in Sources */,
 				CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */,
 				DCF95EAD21E583D7002ED6F5 /* PerformanceViewController.swift in Sources */,
 				E010272E1DE79B1400E2F2A9 /* Constants.swift in Sources */,
@@ -747,6 +835,7 @@
 				CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */,
 				CD69E0281DE477420029B168 /* CourseCollectionViewCell.swift in Sources */,
 				CBAFF0782051212E00010320 /* OAuth2Helper.swift in Sources */,
+				DC050FC221FECA5F0033711A /* PerformanceCourseViewController.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
 				E014CBCA1DDBF72A00A97E80 /* Connector.swift in Sources */,
 				CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */,
@@ -754,6 +843,7 @@
 				CD69E0301DE590940029B168 /* AssignmentTableViewCell.swift in Sources */,
 				CD69E03F1DE606770029B168 /* CourseTableViewHeaderView.swift in Sources */,
 				E02856B21DE6E2AF00D85AA8 /* Utilities.swift in Sources */,
+				DC397478220049AB001DB2E9 /* PerformanceOverallViewController.swift in Sources */,
 				DC8D8C7121D9DA0300D07A5D /* ProfileViewController.swift in Sources */,
 				CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */,
 				DCC30A4D21983B2C0076E1A1 /* Device.swift in Sources */,
@@ -790,6 +880,11 @@
 			isa = PBXTargetDependency;
 			target = CD37DEF31DA3C697009B69FC /* fyp */;
 			targetProxy = CD37DF091DA3C698009B69FC /* PBXContainerItemProxy */;
+		};
+		DC39749522004DEA001DB2E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = DC39749422004DEA001DB2E9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -917,7 +1012,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9VUX37J29A;
 				INFOPLIST_FILE = fyp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cse.ik1801.FYP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -936,7 +1031,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9VUX37J29A;
 				INFOPLIST_FILE = fyp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cse.ik1801.FYP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
