@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34BFA9D6221142DE00DC81E9 /* UploadAsgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */; };
 		CB1041482064F3D30013F706 /* test3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD69E01C1DE0AD8E0029B168 /* test3.pdf */; };
 		CB71E8051FC7AEF1001B51F5 /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB71E8001FC7AEE9001B51F5 /* OAuth2.framework */; };
 		CB71E8061FC7AEF1001B51F5 /* OAuth2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB71E8001FC7AEE9001B51F5 /* OAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -49,7 +50,7 @@
 		CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */; };
 		CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22551DAE2D490025D33E /* roundUIButton.swift */; };
 		CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */; };
-		DC050FBE21FEB1520033711A /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC050FBD21FEB1520033711A /* UploadViewController.swift */; };
+		DC050FBE21FEB1520033711A /* UploadCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC050FBD21FEB1520033711A /* UploadCourseViewController.swift */; };
 		DC050FC221FECA5F0033711A /* PerformanceCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC050FC121FECA5F0033711A /* PerformanceCourseViewController.swift */; };
 		DC397478220049AB001DB2E9 /* PerformanceOverallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC397477220049AB001DB2E9 /* PerformanceOverallViewController.swift */; };
 		DC39749222004DEA001DB2E9 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC39748D22004DE2001DB2E9 /* Charts.framework */; };
@@ -169,6 +170,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAsgViewController.swift; sourceTree = "<group>"; };
 		CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2.xcodeproj; path = "fyp/OAuth2-3.0.3/OAuth2.xcodeproj"; sourceTree = "<group>"; };
 		CB71E80B1FC7AFB0001B51F5 /* HomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		CBA154A3207F9609001E20C0 /* AssignmentMarking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentMarking.swift; sourceTree = "<group>"; };
@@ -214,7 +216,7 @@
 		CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navigationDelegate.swift; sourceTree = "<group>"; };
 		CDBC22551DAE2D490025D33E /* roundUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundUIButton.swift; sourceTree = "<group>"; };
 		CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bottomBorderUITextField.swift; sourceTree = "<group>"; };
-		DC050FBD21FEB1520033711A /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		DC050FBD21FEB1520033711A /* UploadCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadCourseViewController.swift; sourceTree = "<group>"; };
 		DC050FC121FECA5F0033711A /* PerformanceCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceCourseViewController.swift; sourceTree = "<group>"; };
 		DC397477220049AB001DB2E9 /* PerformanceOverallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceOverallViewController.swift; sourceTree = "<group>"; };
 		DC39748622004DE2001DB2E9 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = fyp/Charts/Charts.xcodeproj; sourceTree = "<group>"; };
@@ -266,6 +268,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34BFA9CF22113B1F00DC81E9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DC050FBD21FEB1520033711A /* UploadCourseViewController.swift */,
+				34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		CB1041442064E82C0013F706 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,7 +512,7 @@
 		DC050FBA21FEA5780033711A /* UploadModule */ = {
 			isa = PBXGroup;
 			children = (
-				DC050FBD21FEB1520033711A /* UploadViewController.swift */,
+				34BFA9CF22113B1F00DC81E9 /* Controller */,
 			);
 			name = UploadModule;
 			sourceTree = "<group>";
@@ -802,7 +813,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCC7F90D215A36C600FFB159 /* AppDelegate.swift in Sources */,
-				DC050FBE21FEB1520033711A /* UploadViewController.swift in Sources */,
+				DC050FBE21FEB1520033711A /* UploadCourseViewController.swift in Sources */,
 				CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */,
 				DCF95EAD21E583D7002ED6F5 /* PerformanceViewController.swift in Sources */,
 				E010272E1DE79B1400E2F2A9 /* Constants.swift in Sources */,
@@ -836,6 +847,7 @@
 				CD69E0281DE477420029B168 /* CourseCollectionViewCell.swift in Sources */,
 				CBAFF0782051212E00010320 /* OAuth2Helper.swift in Sources */,
 				DC050FC221FECA5F0033711A /* PerformanceCourseViewController.swift in Sources */,
+				34BFA9D6221142DE00DC81E9 /* UploadAsgViewController.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
 				E014CBCA1DDBF72A00A97E80 /* Connector.swift in Sources */,
 				CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */,
