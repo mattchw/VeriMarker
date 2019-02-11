@@ -85,6 +85,27 @@ class CourseViewController: UIViewController,
       print ("Fail to load api")
 
     }
+//    api!.gradeStudioLogin(){
+//        (data, error) in
+//        if (error != nil){
+//            //handle error here
+//            return
+//        }
+//        print(data)
+//        let token = data!["token"].stringValue
+//        print(token)
+//        HomePageViewController.user?.token = token
+//        print(HomePageViewController.user?.token)
+//        api!.gradeStudioGetCourseGrade(token: (HomePageViewController.user?.token)!, courseID: "5c4d78f351321c152d8c2c1f"){
+//            (data, error) in
+//            if (error != nil){
+//                //handle error here
+//                return
+//            }
+//            print(data)
+//        }
+//    }
+    
     api!.getCourseList(userId: self.userId){
       (courses, error) in
       if (error != nil){
