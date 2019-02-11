@@ -18,6 +18,7 @@ class AppAPI {
     //let PDFAnnotationAPI = "http://localhost:8080/PdfAnnotations20161026/"
     //matthew.local
     let PDFAnnotationAPI = "http://matthew.local:8080/PdfAnnotations20161026/"
+    let GradeStudioAPI = "http://matthew.local:8000/"
     //CUHK1x
     //let PDFAnnotationAPI = "http://10.13.57.214:8080/PdfAnnotations20161026/"
     //iphone mobile hotspot
@@ -550,6 +551,43 @@ class AppAPI {
         }
         print ("AppAPI.writeFile# dir is empty")
         return false
+    }
+    
+    /* Grade Studio API */
+    func gradeStudioLogin(completion: @escaping (JSON?, ConnectionError?)->()) {
+        var postString: String
+        let urlString = GradeStudioAPI + "login"
+
+        print ("gradeStudioLogin# urlWithParam = \(urlString)")
+        postString = "cid=" + "teacherA" + "&pwd=" + "abcd1234"
+        self.connector.sendPostRequest(urlString: urlString, postString: postString){
+            (data, error) in
+            let dataString = String(data: data!, encoding: String.Encoding.utf8)
+            if data == nil || error != nil || dataString == "error" {
+                return
+            } else {
+                let json = try! JSON(data: data!)
+                completion(json, nil)
+            }
+        }
+    }
+    
+    func gradeStudioGetCourseGrade(token: String, courseID: String, completion: @escaping (JSON?, ConnectionError?)->()) {
+        var postString: String
+        let urlString = GradeStudioAPI+"getCourseGrade"
+        
+        print ("gradeStudioGetCourseGrade# urlWithParam = \(urlString)")
+        postString = "token=" + token + "&courseID=" + courseID
+        self.connector.sendPostRequest(urlString: urlString, postString: postString){
+            (data, error) in
+            let dataString = String(data: data!, encoding: String.Encoding.utf8)
+            if data == nil || error != nil || dataString == "error" {
+                return
+            } else {
+                let json = try! JSON(data: data!)
+                completion(json, nil)
+            }
+        }
     }
     
 }

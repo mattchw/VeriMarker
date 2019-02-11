@@ -53,6 +53,7 @@ class User: NSObject {
     var departmentName: String
     var mail: String
     var type: String
+    var token: String = ""
     
     init?(fullName: String, computingId: String, universityId: String, departmentName: String, mail: String, type: String){
         self.fullName = fullName
