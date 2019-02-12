@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34AFBD202212AEB6003DF161 /* Eureka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AFBD1A2212AEA0003DF161 /* Eureka.framework */; };
+		34AFBD212212AEB6003DF161 /* Eureka.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34AFBD1A2212AEA0003DF161 /* Eureka.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34AFBD252212B728003DF161 /* UploadFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AFBD242212B728003DF161 /* UploadFileViewController.swift */; };
 		34BFA9D6221142DE00DC81E9 /* UploadAsgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */; };
 		34BFA9D822115B6C00DC81E9 /* FileDir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BFA9D722115B6C00DC81E9 /* FileDir.swift */; };
-		34BFA9DA22115C6300DC81E9 /* expandableDirView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BFA9D922115C6300DC81E9 /* expandableDirView.swift */; };
 		CB1041482064F3D30013F706 /* test3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD69E01C1DE0AD8E0029B168 /* test3.pdf */; };
 		CB71E8051FC7AEF1001B51F5 /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB71E8001FC7AEE9001B51F5 /* OAuth2.framework */; };
 		CB71E8061FC7AEF1001B51F5 /* OAuth2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB71E8001FC7AEE9001B51F5 /* OAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -84,6 +86,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		34AFBD192212AEA0003DF161 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34AFBD122212AEA0003DF161 /* Eureka.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 51729DEB1B9A4F5E004A00EB;
+			remoteInfo = Eureka;
+		};
+		34AFBD1B2212AEA0003DF161 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34AFBD122212AEA0003DF161 /* Eureka.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 51729DF51B9A4F5E004A00EB;
+			remoteInfo = EurekaTests;
+		};
+		34AFBD222212AEB6003DF161 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34AFBD122212AEA0003DF161 /* Eureka.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 51729DEA1B9A4F5E004A00EB;
+			remoteInfo = Eureka;
+		};
 		CB71E7FD1FC7AEE9001B51F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */;
@@ -163,6 +186,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				34AFBD212212AEB6003DF161 /* Eureka.framework in Embed Frameworks */,
 				CB71E8061FC7AEF1001B51F5 /* OAuth2.framework in Embed Frameworks */,
 				DC39749322004DEA001DB2E9 /* Charts.framework in Embed Frameworks */,
 			);
@@ -172,9 +196,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		34AFBD122212AEA0003DF161 /* Eureka.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Eureka.xcodeproj; path = fyp/Eureka/Eureka.xcodeproj; sourceTree = "<group>"; };
+		34AFBD242212B728003DF161 /* UploadFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileViewController.swift; sourceTree = "<group>"; };
 		34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAsgViewController.swift; sourceTree = "<group>"; };
 		34BFA9D722115B6C00DC81E9 /* FileDir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDir.swift; sourceTree = "<group>"; };
-		34BFA9D922115C6300DC81E9 /* expandableDirView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = expandableDirView.swift; sourceTree = "<group>"; };
 		CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2.xcodeproj; path = "fyp/OAuth2-3.0.3/OAuth2.xcodeproj"; sourceTree = "<group>"; };
 		CB71E80B1FC7AFB0001B51F5 /* HomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		CBA154A3207F9609001E20C0 /* AssignmentMarking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentMarking.swift; sourceTree = "<group>"; };
@@ -259,6 +284,7 @@
 				DC39749222004DEA001DB2E9 /* Charts.framework in Frameworks */,
 				CB71E8051FC7AEF1001B51F5 /* OAuth2.framework in Frameworks */,
 				E02856AC1DE57F0000D85AA8 /* libsqlite3.tbd in Frameworks */,
+				34AFBD202212AEB6003DF161 /* Eureka.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,11 +298,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34AFBD132212AEA0003DF161 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34AFBD1A2212AEA0003DF161 /* Eureka.framework */,
+				34AFBD1C2212AEA0003DF161 /* EurekaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		34BFA9CF22113B1F00DC81E9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				DC050FBD21FEB1520033711A /* UploadCourseViewController.swift */,
 				34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */,
+				34AFBD242212B728003DF161 /* UploadFileViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -442,6 +478,7 @@
 		CD37DEEB1DA3C697009B69FC = {
 			isa = PBXGroup;
 			children = (
+				34AFBD122212AEA0003DF161 /* Eureka.xcodeproj */,
 				DC39748622004DE2001DB2E9 /* Charts.xcodeproj */,
 				CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */,
 				E010272F1DE7AE0E00E2F2A9 /* Assets.xcassets */,
@@ -518,7 +555,6 @@
 			children = (
 				34BFA9CF22113B1F00DC81E9 /* Controller */,
 				34BFA9D722115B6C00DC81E9 /* FileDir.swift */,
-				34BFA9D922115C6300DC81E9 /* expandableDirView.swift */,
 			);
 			name = UploadModule;
 			sourceTree = "<group>";
@@ -656,6 +692,7 @@
 			dependencies = (
 				CB71E8081FC7AEF1001B51F5 /* PBXTargetDependency */,
 				DC39749522004DEA001DB2E9 /* PBXTargetDependency */,
+				34AFBD232212AEB6003DF161 /* PBXTargetDependency */,
 			);
 			name = fyp;
 			productName = fyp;
@@ -724,6 +761,10 @@
 					ProjectRef = DC39748622004DE2001DB2E9 /* Charts.xcodeproj */;
 				},
 				{
+					ProductGroup = 34AFBD132212AEA0003DF161 /* Products */;
+					ProjectRef = 34AFBD122212AEA0003DF161 /* Eureka.xcodeproj */;
+				},
+				{
 					ProductGroup = CB71E7F71FC7AEE8001B51F5 /* Products */;
 					ProjectRef = CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */;
 				},
@@ -737,6 +778,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		34AFBD1A2212AEA0003DF161 /* Eureka.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Eureka.framework;
+			remoteRef = 34AFBD192212AEA0003DF161 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34AFBD1C2212AEA0003DF161 /* EurekaTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = EurekaTests.xctest;
+			remoteRef = 34AFBD1B2212AEA0003DF161 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CB71E7FE1FC7AEE9001B51F5 /* OAuth2.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -823,6 +878,7 @@
 				CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */,
 				DCF95EAD21E583D7002ED6F5 /* PerformanceViewController.swift in Sources */,
 				E010272E1DE79B1400E2F2A9 /* Constants.swift in Sources */,
+				34AFBD252212B728003DF161 /* UploadFileViewController.swift in Sources */,
 				CD2425151DD0A7E3006D5F17 /* CommentView.swift in Sources */,
 				CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */,
 				E080B8031DE466CF00BEF251 /* ErasedLinePath.swift in Sources */,
@@ -834,7 +890,6 @@
 				CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */,
 				E02856B01DE61FC000D85AA8 /* Scheduler.swift in Sources */,
 				CBA154A4207F9609001E20C0 /* AssignmentMarking.swift in Sources */,
-				34BFA9DA22115C6300DC81E9 /* expandableDirView.swift in Sources */,
 				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
 				CD69E0411DE60B210029B168 /* CourseTableViewCell.swift in Sources */,
 				34BFA9D822115B6C00DC81E9 /* FileDir.swift in Sources */,
@@ -891,6 +946,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		34AFBD232212AEB6003DF161 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Eureka;
+			targetProxy = 34AFBD222212AEB6003DF161 /* PBXContainerItemProxy */;
+		};
 		CB71E8081FC7AEF1001B51F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = OAuth2iOS;

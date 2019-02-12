@@ -852,6 +852,25 @@
             </objects>
             <point key="canvasLocation" x="3499" y="898"/>
         </scene>
+        <!--File-->
+        <scene sceneID="F6c-VE-JzH">
+            <objects>
+                <viewController id="3xA-LE-88t" customClass="UploadFileViewController" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nSp-Yb-IUw"/>
+                        <viewControllerLayoutGuide type="bottom" id="XTs-fy-8Ip"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AeL-PN-oQ7">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="File" id="Qwl-ms-JJr"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ClS-bL-HjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5103.515625" y="1847.8770131771594"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="2rO-9F-1K8">
             <objects>
@@ -881,7 +900,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7iM-AZ-7p9">
-                                <rect key="frame" x="0.0" y="64" width="1024" height="1253"/>
+                                <rect key="frame" x="0.0" y="64" width="1024" height="1302"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wuz-48-YuC">
@@ -927,6 +946,7 @@
                     <navigationItem key="navigationItem" title="Assignment" id="XOM-es-yFm"/>
                     <connections>
                         <outlet property="tableView" destination="7iM-AZ-7p9" id="2E3-OU-6YO"/>
+                        <segue destination="3xA-LE-88t" kind="show" identifier="showFileUpload" id="bU3-sw-5V5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btH-oH-5Ef" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1109,6 +1129,24 @@
             </objects>
             <point key="canvasLocation" x="6518" y="-1118"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ONu-LK-mhf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="r7i-jS-Skx" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gOk-c8-7s3">
+                        <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3xA-LE-88t" kind="relationship" relationship="rootViewController" id="Dzn-ct-8Q9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jWr-fS-It5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4294" y="1654"/>
+        </scene>
     </scenes>
     <resources>
         <image name="data" width="25" height="25"/>
@@ -1122,7 +1160,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fdT-dQ-s4y"/>
-        <segue reference="lxz-7Z-yNX"/>
+        <segue reference="fnt-3a-3K1"/>
+        <segue reference="bU3-sw-5V5"/>
         <segue reference="Zlu-nO-WmT"/>
         <segue reference="O0F-Pa-Zfx"/>
         <segue reference="iBp-Mm-jyk"/>

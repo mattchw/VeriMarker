@@ -84,15 +84,24 @@ class UploadAsgViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "showFileUpload"){
+            let VC = segue.destination as! UploadFileViewController
+            VC.filename = ((sender as AnyObject).textLabel??.text)!
+        }
+    }
 
 }
 
 extension UploadAsgViewController: UITableViewDelegate, UITableViewDataSource {
     
-    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        let sender = tableView.cellForRow(at: indexPath)
-    //        performSegue(withIdentifier: "showOverallPerformance", sender: sender)
-    //    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sender = tableView.cellForRow(at: indexPath)
+        //performSegue(withIdentifier: "showAsgPerformance", sender: sender)
+        print(sender?.textLabel?.text)
+        performSegue(withIdentifier: "showFileUpload", sender: sender)
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
