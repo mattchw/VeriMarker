@@ -75,6 +75,13 @@ class UploadCourseViewController: UIViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "showAsgUpload"){
+            let VC = segue.destination as! UploadAsgViewController
+            VC.course = ((sender as AnyObject).textLabel??.text)!
+        }
+    }
 
 }
 extension UploadCourseViewController: UITableViewDelegate, UITableViewDataSource {
@@ -82,6 +89,8 @@ extension UploadCourseViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sender = courseTableView.cellForRow(at: indexPath)
         //performSegue(withIdentifier: "showAsgPerformance", sender: sender)
+        print(sender?.textLabel?.text)
+        performSegue(withIdentifier: "showAsgUpload", sender: sender)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		34BFA9D6221142DE00DC81E9 /* UploadAsgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */; };
+		34BFA9D822115B6C00DC81E9 /* FileDir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BFA9D722115B6C00DC81E9 /* FileDir.swift */; };
+		34BFA9DA22115C6300DC81E9 /* expandableDirView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BFA9D922115C6300DC81E9 /* expandableDirView.swift */; };
 		CB1041482064F3D30013F706 /* test3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD69E01C1DE0AD8E0029B168 /* test3.pdf */; };
 		CB71E8051FC7AEF1001B51F5 /* OAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB71E8001FC7AEE9001B51F5 /* OAuth2.framework */; };
 		CB71E8061FC7AEF1001B51F5 /* OAuth2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB71E8001FC7AEE9001B51F5 /* OAuth2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -171,6 +173,8 @@
 
 /* Begin PBXFileReference section */
 		34BFA9D5221142DE00DC81E9 /* UploadAsgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAsgViewController.swift; sourceTree = "<group>"; };
+		34BFA9D722115B6C00DC81E9 /* FileDir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDir.swift; sourceTree = "<group>"; };
+		34BFA9D922115C6300DC81E9 /* expandableDirView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = expandableDirView.swift; sourceTree = "<group>"; };
 		CB71E7F61FC7AEE8001B51F5 /* OAuth2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2.xcodeproj; path = "fyp/OAuth2-3.0.3/OAuth2.xcodeproj"; sourceTree = "<group>"; };
 		CB71E80B1FC7AFB0001B51F5 /* HomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		CBA154A3207F9609001E20C0 /* AssignmentMarking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentMarking.swift; sourceTree = "<group>"; };
@@ -513,6 +517,8 @@
 			isa = PBXGroup;
 			children = (
 				34BFA9CF22113B1F00DC81E9 /* Controller */,
+				34BFA9D722115B6C00DC81E9 /* FileDir.swift */,
+				34BFA9D922115C6300DC81E9 /* expandableDirView.swift */,
 			);
 			name = UploadModule;
 			sourceTree = "<group>";
@@ -828,8 +834,10 @@
 				CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */,
 				E02856B01DE61FC000D85AA8 /* Scheduler.swift in Sources */,
 				CBA154A4207F9609001E20C0 /* AssignmentMarking.swift in Sources */,
+				34BFA9DA22115C6300DC81E9 /* expandableDirView.swift in Sources */,
 				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
 				CD69E0411DE60B210029B168 /* CourseTableViewCell.swift in Sources */,
+				34BFA9D822115B6C00DC81E9 /* FileDir.swift in Sources */,
 				E01B059D1DDB7B7100FF539F /* Convertor.swift in Sources */,
 				CD4907411DA4B0CD00AE445D /* Assignment.swift in Sources */,
 				CD69E03B1DE5D5690029B168 /* AssignmentRecordTableViewHeaderView.swift in Sources */,
